@@ -6,7 +6,7 @@
   font-family: 'Poppins', sans-serif;
 }
 body {
-  background-image: url('../img/bg-auth.jpg');
+  background-image: url('../img/bg-app.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -83,4 +83,31 @@ main {
 }
 
 
+/* App UI */
+.bg-glass-sidebar {
+  background: rgba( 255, 255, 255, 0.3 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 15.5px );
+  -webkit-backdrop-filter: blur( 15.5px );
+}
 
+aside {
+  width: 350px;
+  height: 100vh;
+}
+aside ul {
+  padding:0;
+}
+
+aside ul li {
+  list-style: none;
+}
+aside ul li a.active {
+  background: rgba( 255, 255, 255, 0.2 );
+  border-radius: 10px;
+  width: 100%;
+ 
+}
+aside ul li a {
+  padding: 12px 10px;
+}
