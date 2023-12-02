@@ -123,7 +123,7 @@ aside ul li:hover {
 main #content {
   width: 78%;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +32,5 @@ Route::middleware('guest')->group(function () {
 
 
 Route::get('app/dashboard', [DashboardController::class, 'index'])->name('app.dashboard');
+Route::get('app/menu', [MenuController::class, 'index'])->name('app.menu');
+Route::get('app/orders', [OrderController::class, 'index'])->name('app.orders');
