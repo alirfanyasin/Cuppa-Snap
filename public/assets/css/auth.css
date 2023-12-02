@@ -1,7 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 body {
   background-image: url('../img/bg-auth.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.bg-glass {
+  width: 100%; 
+  height: 100%; 
+  background: rgba( 255, 255, 255, 0.3 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 15.5px );
+  -webkit-backdrop-filter: blur( 15.5px );
+  border-radius: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.50);
+}
+
+.btn-custom-secondary {
+  height: 55px;
+  width: 100%;
+  background: rgba( 255, 255, 255, 0.1 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 15.5px );
+  -webkit-backdrop-filter: blur( 15.5px );
+  border-radius: 10px;
+  border: none;
+  color: white;
+}
+
+.btn-button {
+  font-size: 15pt;
+  font-weight: 700;
+  letter-spacing: 6px;
+  line-height: 55px;
+  text-align: center;
+  word-wrap: break-word
+}
+
+.btn-a {
+  font-size: 13pt;
+  text-align: center;
+  line-height: 55px;
+}
+
+.form-floating input,
+.form-floating input:focus,
+.form-floating input:focus label {
+  background: none;
+  color: white;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-floating>.form-control-plaintext~label::after, .form-floating>.form-control:focus~label::after, .form-floating>.form-control:not(:placeholder-shown)~label::after, .form-floating>.form-select~label::after  {
+  background: none;
+  color: white;
+}
+
+
+
+.form-floating label {
+  color: white;
 }
