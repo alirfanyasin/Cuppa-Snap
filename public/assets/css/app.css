@@ -26,7 +26,7 @@ main {
   backdrop-filter: blur( 15.5px );
   -webkit-backdrop-filter: blur( 15.5px );
   border-radius: 15px;
-  border: 3px solid rgba(255, 255, 255, 0.50);
+  border: 2px solid rgba(255, 255, 255, 0.50);
 }
 
 .btn-custom-secondary {
@@ -92,7 +92,8 @@ main {
 }
 
 aside {
-  width: 350px;
+  /* width: 400px; */
+  width: 22%;
   height: 100vh;
 }
 aside ul {
@@ -110,4 +111,31 @@ aside ul li a.active {
 }
 aside ul li a {
   padding: 12px 10px;
+  width: 100%;
+}
+
+aside ul li:hover {
+  background: rgba( 255, 255, 255, 0.2 );
+  border-radius: 10px;
+  width: 100%;
+}
+
+main #content {
+  width: 78%;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+
+/* For WebKit browsers (Chrome, Safari) */
+div.bg-glass::-webkit-scrollbar {
+  width: 5px; 
+  height: 10px;
+  border-radius: 10px;
+}
+
+div.bg-glass::-webkit-scrollbar-thumb {
+  background-color: #ffffff; 
+  height: 10px;
+  border-radius: 10px; 
 }
