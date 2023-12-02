@@ -1,7 +1,16 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-  <div class="container mt-5 px-5">
+  <header class="container px-5 mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
+    <h2 class="text-white fw-semibold">Dashboard</h2>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb text-white">
+        <li class="breadcrumb-item"><a href="#" class="text-white text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">Dashboard</li>
+      </ol>
+    </nav>
+  </header>
+  <div class="container mt-4 px-5">
     <div class="row mb-1">
       <div class="col-md-4 mb-3">
         <div class="bg-glass text-center text-white py-4 position-relative">

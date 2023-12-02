@@ -18,7 +18,8 @@
       </a>
     </li>
     <li class="mb-2">
-      <a href="" class="d-inline-block text-decoration-none text-white">
+      <a href="{{ route('app.orders') }}"
+        class="d-inline-block text-decoration-none text-white {{ Request::is('app/orders') ? 'active' : '' }}">
         <div class="d-flex align-items-center"><iconify-icon icon="mdi:cart-outline"
             width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Orders</span></div>
       </a>

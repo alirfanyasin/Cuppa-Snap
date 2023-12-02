@@ -91,6 +91,24 @@ main {
   -webkit-backdrop-filter: blur( 15.5px );
 }
 
+#navbar .name {
+  /* color: #5a1f06; */
+  color: #ffffff;
+  
+}
+
+#navbar {
+  background: rgba(108, 108, 108, 0.2);
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 10px );
+  -webkit-backdrop-filter: blur( 10px );
+  position: fixed;
+  z-index: 999;
+  width: calc(100vw - 22%);
+  right: 0;
+  top: 0;
+}
+
 aside {
   /* width: 400px; */
   width: 22%;
@@ -118,6 +136,10 @@ aside ul li:hover {
   background: rgba( 255, 255, 255, 0.2 );
   border-radius: 10px;
   width: 100%;
+}
+
+#breadcrumb {
+  padding-top: 80px;
 }
 
 main #content {
