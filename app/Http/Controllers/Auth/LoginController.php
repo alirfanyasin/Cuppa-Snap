@@ -9,6 +9,6 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('layouts.auth');
+        return view('pages.auth.login');
     }
 }
