@@ -95,17 +95,5 @@
         </div>
       </div>
     </div>
-    <div class="row mb-1">
-      <div class="col-md-4 mb-3">
-        <div class="bg-glass text-center text-white py-4 position-relative">
-          <h1 class="fw-bold" style="font-size: 60pt;">345</h1>
-          <h5>Total Sales</h5>
-          <div class="position-absolute" style="bottom: 0; right: 0;">
-            <iconify-icon icon="game-icons:coffee-beans" width="90px"
-              style="color: rgba( 255, 255, 255, 0.2);"></iconify-icon>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 @endsection
