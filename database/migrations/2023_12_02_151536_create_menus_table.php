@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('price');
             $table->string('image');
+            $table->string('status')->default('Tersedia')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

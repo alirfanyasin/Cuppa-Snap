@@ -11,7 +11,7 @@
     </nav>
   </header>
   <div class="container px-5 mt-4">
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('app.menu.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="row">
         <div class="col-md-8 mb-3">
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="mt-3">
-            <button type="button" onclick="notification()" class="border-0  rounded-3 text-white"
+            <button type="submit" onclick="notification()" class="border-0  rounded-3 text-white"
               style="padding: 10px 30px;background: rgba( 255, 255, 255, 0.3 );
               box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
               backdrop-filter: blur( 15.5px );
@@ -49,10 +49,15 @@
         </div>
         <div class="col-md-4 mb-3">
           <div class="bg-glass p-4">
-            <div class="rounded-4">
-              <img src="{{ asset('assets/img/no-photo.jpg') }}" alt="no-photo" class="w-100 rounded-3">
+            <div class="rounded-4 h-100">
+              <img src="{{ asset('assets/img/no-photo.jpg') }}" id="result" alt="no-photo" class="w-100 rounded-3">
             </div>
-            <input type="file" class="form-control mt-3">
+            <div class="" style="margin-top: -35px">
+              <input type="file" name="image" class="form-control" onchange="readFile(this)">
+              @error('image')
+                <small class="text-white">{{ $message }}</small>
+              @enderror
+            </div>
           </div>
         </div>
       </div>
@@ -71,6 +76,19 @@
         progress: undefined,
         theme: "light",
       });
+    }
+
+    // File Reader
+    function readFile(input) {
+      let file = input.files[0];
+      let fileReader = new FileReader();
+      fileReader.readAsText(file);
+      fileReader.onload = function() {
+        document.getElementById("result").src = URL.createObjectURL(file);
+      };
+      fileReader.onerror = function() {
+        alert(fileReader.error);
+      };
     }
   </script>
 @endsection
