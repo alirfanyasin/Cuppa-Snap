@@ -81,7 +81,8 @@ class MenuController extends Controller
             'name' => 'required|string',
             'description' => 'required|string|max:255',
             'price' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:1024'
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:1024',
+            'status' => 'required'
         ]);
 
         if ($request->hasFile('image')) {

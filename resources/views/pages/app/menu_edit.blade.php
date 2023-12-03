@@ -41,6 +41,16 @@
                 <small class="text-white">{{ $message }}</small>
               @enderror
             </div>
+            <div class="form-floating">
+              <select class="form-select" name="status" id="status" aria-label="Default select example">
+                <option value="Available" {{ $data->status == 'Available' ? 'selected' : '' }}>Available</option>
+                <option value="Empty" {{ $data->status == 'Empty' ? 'selected' : '' }}>Empty</option>
+              </select>
+              <label for="status">Status</label>
+              @error('status')
+                <small class="text-white">{{ $message }}</small>
+              @enderror
+            </div>
           </div>
           <div class="mt-3">
             <button type="submit" onclick="notification()" class="border-0  rounded-3 text-white"

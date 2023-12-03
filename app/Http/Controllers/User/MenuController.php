@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -12,7 +13,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('pages.app.menu');
+        return view('pages.app.menu', [
+            'data' => Menu::where('status', 'Available')->get()
+        ]);
     }
 
     /**
