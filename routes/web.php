@@ -41,6 +41,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::get('app/dashboard', [DashboardController::class, 'index'])->name('app.dashboard');
     Route::get('app/menu', [MenuController::class, 'index'])->name('app.menu');
+    Route::get('app/menu/create', [MenuController::class, 'create'])->name('app.menu.create');
     Route::get('app/orders', [OrderController::class, 'index'])->name('app.orders');
 });
 

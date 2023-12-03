@@ -20,7 +20,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.app.menu_create');
     }
 
     /**
