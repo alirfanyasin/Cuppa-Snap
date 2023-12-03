@@ -2,6 +2,11 @@
 @section('title', 'Login')
 
 @section('content')
+  @if (session('error'))
+    <div class="bg-glass p-2 text-center text-white mb-3 d-flex justify-content-center align-items-center">
+      <iconify-icon icon="bx:error" width="25px"></iconify-icon>&nbsp;&nbsp; {{ session('error') }}
+    </div>
+  @endif
   <form action="{{ route('login.post') }}" method="POST">
     @csrf
     <div class="bg-glass p-4">
