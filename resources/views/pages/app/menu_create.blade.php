@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="mt-3">
-            <button type="submit" class="border-0  rounded-3 text-white"
+            <button type="button" onclick="notification()" class="border-0  rounded-3 text-white"
               style="padding: 10px 30px;background: rgba( 255, 255, 255, 0.3 );
               box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
               backdrop-filter: blur( 15.5px );
@@ -58,4 +58,19 @@
       </div>
     </form>
   </div>
+
+  <script>
+    function notification() {
+      toast('🦄 Wow so easy!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  </script>
 @endsection
