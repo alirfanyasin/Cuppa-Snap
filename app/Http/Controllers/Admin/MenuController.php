@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MenuController extends Controller
@@ -14,7 +15,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('pages.app.menu');
+        return view('pages.app.menu', [
+            'data' => Menu::all()
+        ]);
     }
 
     /**
@@ -46,7 +49,7 @@ class MenuController extends Controller
 
         Menu::create($validatedData);
 
-        return redirect()->route('app.menu')->with('success', 'Creared menu successfully');
+        return redirect()->route('app.menu')->with('success', 'Created menu successfully');
     }
 
     /**
@@ -62,7 +65,9 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('pages.app.menu_edit', [
+            'data' => Menu::findOrFail($id)
+        ]);
     }
 
     /**
@@ -70,7 +75,31 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Menu::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string|max:255',
+            'price' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:1024'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $oldFile = $data->image;
+
+            if ($oldFile) {
+                Storage::delete('public/menu/' . $oldFile);
+            }
+
+            $file = $request->file('image');
+            $name = Str::random(5) . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/menu', $name);
+            $validatedData['image'] = $name;
+        }
+
+        $data->update($validatedData);
+
+        return redirect()->route('app.menu')->with('success', 'Updated menu successfully');
     }
 
     /**
@@ -78,6 +107,9 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Menu::findOrFail($id);
+        Storage::delete('public/menu/' . $data->image);
+        $data->delete();
+        return redirect()->route('app.menu')->with('success', 'Deleted menu successfully');
     }
 }

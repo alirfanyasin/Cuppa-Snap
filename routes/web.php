@@ -43,6 +43,9 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::get('app/menu', [MenuController::class, 'index'])->name('app.menu');
     Route::get('app/menu/create', [MenuController::class, 'create'])->name('app.menu.create');
     Route::post('app/menu/store', [MenuController::class, 'store'])->name('app.menu.store');
+    Route::get('app/menu/{id}/edit', [MenuController::class, 'edit'])->name('app.menu.edit');
+    Route::put('app/menu/{id}/update', [MenuController::class, 'update'])->name('app.menu.update');
+    Route::delete('app/menu/{id}/destroy', [MenuController::class, 'destroy'])->name('app.menu.destroy');
     Route::get('app/orders', [OrderController::class, 'index'])->name('app.orders');
 });
 
