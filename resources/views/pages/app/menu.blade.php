@@ -39,13 +39,17 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3">
                   @role('pelanggan')
-                    <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
-                      style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
-                      <span class="d-flex justify-content-center align-items-center ">
-                        <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                        cart
-                      </span>
-                    </a>
+                    <form action="{{ route('add_to_card', $item->id) }}" method="POST" class="d-inline">
+                      @csrf
+                      <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+                      <input type="hidden" name="menu_id" id="menu_id" value="{{ $item->id }}">
+                      <button type="submit" class="text-white border-0 d-inline-block rounded-3"
+                        style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );"><span
+                          class="d-flex justify-content-center align-items-center ">
+                          <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                          cart
+                        </span></button>
+                    </form>
                   @endrole
                   @role('kasir')
                     <div>
