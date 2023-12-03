@@ -12,14 +12,23 @@
         <div class="form-floating mb-3">
           <input type="text" name="name" class="form-control" id="name" placeholder="Jhon Doe">
           <label for="name">Full Name</label>
+          @error('name')
+            <small class="text-white">{{ $message }}</small>
+          @enderror
         </div>
         <div class="form-floating mb-3">
           <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
           <label for="email">Email address</label>
+          @error('email')
+            <small class="text-white">{{ $message }}</small>
+          @enderror
         </div>
         <div class="form-floating mb-3">
           <input type="password" name="password" class="form-control" id="password" placeholder="*******">
           <label for="password">Password</label>
+          @error('password')
+            <small class="text-white">{{ $message }}</small>
+          @enderror
         </div>
       </div>
       <div class="my-5">

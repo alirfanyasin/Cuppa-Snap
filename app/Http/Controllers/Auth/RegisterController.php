@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -22,6 +23,7 @@ class RegisterController extends Controller
         ]);
         $user = User::create($validate);
         $user->assignRole('pelanggan');
-        return redirect()->intended('app/dashboard');
+        Auth::login($user);
+        return redirect()->intended('dashboard');
     }
 }
