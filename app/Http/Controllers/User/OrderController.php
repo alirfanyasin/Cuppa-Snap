@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class OrderController extends Controller
 {
@@ -28,8 +34,43 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'order_type' => 'required|in:Online,On-Site',
+            'phone_number' => 'nullable|required_if:order_type,Online',
+            'address' => 'nullable|required_if:order_type,Online',
+            'payment_method' => 'required',
+        ]);
+
+        // Assuming you are using authentication, get the authenticated user
+        $user = Auth::user();
+
+        // Retrieve menu IDs and quantities from the request
+        $menuIds = $request->input('menu_id');
+        $quantities = $request->input('quantity');
+
+        // Attach menu items to the order
+        foreach ($menuIds as $key => $menuId) {
+            $orderItem = new Order([
+                'user_id' => $user->id,
+                'order_type' => $request->input('order_type'),
+                'phone_number' => $request->input('phone_number'),
+                'address' => $request->input('address'),
+                'payment_method' => $request->input('payment_method'),
+                'status' => 'Pending',
+                'code' => Str::random(8),
+                'menu_id' => $menuId,
+                'quantity' => $quantities[$key],
+            ]);
+
+            $orderItem->save();
+        }
+
+        Cart::where('user_id', $user->id)->delete();
+
+        // Return a response or redirect as needed
+        return redirect()->route('orders')->with('success', 'Order has been placed');
     }
+
 
     /**
      * Display the specified resource.

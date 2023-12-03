@@ -84,11 +84,15 @@
             <h1 class="modal-title fs-5 text-white" id="checkoutModalLabel">Checkout</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <form action="" method="POST">
+          <form action="{{ route('order.store') }}" method="POST">
+            <div class="modal-body">
               @csrf
+              @foreach ($data as $menu)
+                <input type="hidden" name="menu_id[]" value="{{ $menu->menu->id }}">
+                <input type="hidden" name="quantity[]" value="{{ $menu->quantity }}">
+              @endforeach
               <div class="form-floating mb-3">
-                <select class="form-select" name="order-type" id="order-type" aria-label="Default select example"
+                <select class="form-select" name="order_type" id="order-type" aria-label="Default select example"
                   onchange="selectOrderType()">
                   <option selected disabled>Choose</option>
                   <option value="Online">Online</option>
@@ -100,7 +104,7 @@
                 @enderror
               </div>
               <div class="form-floating mb-3 order-type" hidden>
-                <input type="number" name="phone-number" class="form-control" id="phone-number" placeholder="0.000">
+                <input type="number" name="phone_number" class="form-control" id="phone-number" placeholder="0.000">
                 <label for="phone-number">Phone Number</label>
                 @error('price')
                   <small class="text-white">{{ $message }}</small>
@@ -115,7 +119,7 @@
                 @enderror
               </div>
               <div class="form-floating mb-3">
-                <select class="form-select" name="payment-method" id="payment-method"
+                <select class="form-select" name="payment_method" id="payment-method"
                   aria-label="Default select example">
                   <option selected disabled>Choose</option>
                   <option value="Bank Transfer" disabled>Bank Transfer</option>
@@ -126,18 +130,17 @@
                   <small class="text-white">{{ $message }}</small>
                 @enderror
               </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="submit"
-              class="border-0  rounded-3 text-white d-flex justify-content-center align-items-center"
-              style="padding: 10px 30px;background: rgba( 255, 255, 255, 0.2 );
+            </div>
+            <div class="modal-footer">
+              <button type="submit"
+                class="border-0  rounded-3 text-white d-flex justify-content-center align-items-center"
+                style="padding: 10px 30px;background: rgba( 255, 255, 255, 0.2 );
             backdrop-filter: blur( 15.5px );
             -webkit-backdrop-filter: blur( 15.5px );"><iconify-icon
-                icon="bi:bag-check" width="20px"></iconify-icon>&nbsp;&nbsp; Create
-              Order</button>
-            {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-          </div>
+                  icon="bi:bag-check" width="20px"></iconify-icon>&nbsp;&nbsp; Create
+                Order</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
