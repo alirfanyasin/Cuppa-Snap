@@ -53,9 +53,10 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('menu', [UserMenuController::class, 'index'])->name('menu');
-    Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
     Route::post('menu/{id}/add-to-cart', [CartController::class, 'store'])->name('add_to_card');
-    Route::get('/carts', [CartController::class, 'index'])->name('carts');
-    Route::delete('/carts/{id}/destroy', [CartController::class, 'destroy'])->name('carts.destroy');
+    Route::get('carts', [CartController::class, 'index'])->name('carts');
+    Route::delete('carts/{id}/destroy', [CartController::class, 'destroy'])->name('carts.destroy');
     Route::post('/update-quantity/{itemId}', [CartController::class, 'updateQuantity'])->name('update-qty');
+    Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
+    Route::post('order/store', [UserOrderController::class, 'store'])->name('order.store');
 });
