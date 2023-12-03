@@ -57,4 +57,5 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::post('menu/{id}/add-to-cart', [CartController::class, 'store'])->name('add_to_card');
     Route::get('/carts', [CartController::class, 'index'])->name('carts');
     Route::delete('/carts/{id}/destroy', [CartController::class, 'destroy'])->name('carts.destroy');
+    Route::post('/update-quantity/{itemId}', [CartController::class, 'updateQuantity'])->name('update-qty');
 });

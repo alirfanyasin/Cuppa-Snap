@@ -17,7 +17,8 @@ class CartController extends Controller
     {
         session()->forget('cart_count');
         return view('pages.app.carts', [
-            'data' => Cart::where('user_id', Auth::user()->id)->get()
+            'data' => Cart::where('user_id', Auth::user()->id)->get(),
+            'total' => $this->calculateTotal()
         ]);
     }
 
@@ -38,6 +39,31 @@ class CartController extends Controller
         $cartCount = session('cart_count', 0) + 1;
         session(['cart_count' => $cartCount]);
         return redirect()->route('menu')->with('success', 'Add to cart successfully');
+    }
+
+
+    public function updateQuantity($itemId, Request $request)
+    {
+        $cartItem = Cart::find($itemId);
+        $cartItem->quantity = $request->input('quantity');
+        $cartItem->save();
+
+        $total = $this->calculateTotal();
+        return response()->json(['total' => $total]);
+    }
+
+
+    private function calculateTotal()
+    {
+        $cartItems = Cart::where('user_id', Auth::user()->id)->get();
+
+        $total = 0;
+
+        foreach ($cartItems as $item) {
+            $total += $item->menu->price * $item->quantity;
+        }
+
+        return $total;
     }
 
     /**
