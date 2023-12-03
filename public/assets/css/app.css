@@ -58,7 +58,10 @@ main {
 
 .form-floating input,
 .form-floating input:focus,
-.form-floating input:focus label {
+.form-floating input:focus label,
+.form-floating textarea,
+.form-floating textarea:focus {
+  
   background: none;
   color: white;
   border-top: none;
@@ -75,6 +78,12 @@ main {
   background: none;
   color: white;
 }
+
+.form-floating textarea {
+  height: 100px;
+}
+
+
 
 
 

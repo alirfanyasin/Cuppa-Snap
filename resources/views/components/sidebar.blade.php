@@ -13,7 +13,7 @@
       </li>
       <li class="mb-2">
         <a href="{{ route('app.menu') }}"
-          class="d-inline-block text-decoration-none text-white {{ Request::is('app/menu') ? 'active' : '' }}">
+          class="d-inline-block text-decoration-none text-white {{ Request::is('app/menu') ? 'active' : '' }}{{ Request::is('app/menu/*') ? 'active' : '' }}">
           <div class="d-flex align-items-center"><iconify-icon icon="tabler:coffee"
               width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Menu</span></div>
         </a>

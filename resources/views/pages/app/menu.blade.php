@@ -10,6 +10,16 @@
       </ol>
     </nav>
   </header>
+  <div class="container px-5 my-3">
+    @role('kasir')
+      <a href="{{ route('app.menu.create') }}" class="text-white text-decoration-none d-inline-block rounded-3"
+        style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );  backdrop-filter: blur( 10px );">
+        <span class="d-flex justify-content-center align-items-center ">
+          <iconify-icon icon="icon-park-outline:plus" width="25px"></iconify-icon> &nbsp;&nbsp; Create Menu
+        </span>
+      </a>
+    @endrole
+  </div>
   <div class="container px-5" style="margin-top: 150px">
     <div class="row">
       <div class="col-md-4" style="margin-bottom: 150px;">
@@ -25,13 +35,31 @@
               <span>245 Terjual</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-              <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
-                style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
-                <span class="d-flex justify-content-center align-items-center ">
-                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                  cart
-                </span>
-              </a>
+              @role('pelanggan')
+                <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                  style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
+                  <span class="d-flex justify-content-center align-items-center ">
+                    <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                    cart
+                  </span>
+                </a>
+              @endrole
+              @role('kasir')
+                <div>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="uil:edit" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                </div>
+              @endrole
               <div>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
@@ -60,13 +88,31 @@
               <span>245 Terjual</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-              <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
-                style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
-                <span class="d-flex justify-content-center align-items-center ">
-                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                  cart
-                </span>
-              </a>
+              @role('pelanggan')
+                <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                  style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
+                  <span class="d-flex justify-content-center align-items-center ">
+                    <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                    cart
+                  </span>
+                </a>
+              @endrole
+              @role('kasir')
+                <div>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="uil:edit" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                </div>
+              @endrole
               <div>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
@@ -95,13 +141,31 @@
               <span>245 Terjual</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-              <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
-                style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
-                <span class="d-flex justify-content-center align-items-center ">
-                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                  cart
-                </span>
-              </a>
+              @role('pelanggan')
+                <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                  style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
+                  <span class="d-flex justify-content-center align-items-center ">
+                    <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                    cart
+                  </span>
+                </a>
+              @endrole
+              @role('kasir')
+                <div>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="uil:edit" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                </div>
+              @endrole
               <div>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
@@ -130,13 +194,31 @@
               <span>245 Terjual</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-              <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
-                style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
-                <span class="d-flex justify-content-center align-items-center ">
-                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                  cart
-                </span>
-              </a>
+              @role('pelanggan')
+                <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                  style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
+                  <span class="d-flex justify-content-center align-items-center ">
+                    <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                    cart
+                  </span>
+                </a>
+              @endrole
+              @role('kasir')
+                <div>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="uil:edit" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                </div>
+              @endrole
               <div>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
@@ -165,13 +247,31 @@
               <span>245 Terjual</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-              <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
-                style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
-                <span class="d-flex justify-content-center align-items-center ">
-                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                  cart
-                </span>
-              </a>
+              @role('pelanggan')
+                <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                  style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );">
+                  <span class="d-flex justify-content-center align-items-center ">
+                    <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                    cart
+                  </span>
+                </a>
+              @endrole
+              @role('kasir')
+                <div>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="uil:edit" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                  <a href="" class="text-white text-decoration-none d-inline-block rounded-3"
+                    style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
+                    <span class="d-flex justify-content-center align-items-center ">
+                      <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
+                    </span>
+                  </a>
+                </div>
+              @endrole
               <div>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
                 <iconify-icon icon="solar:star-bold" width="20px"></iconify-icon>
