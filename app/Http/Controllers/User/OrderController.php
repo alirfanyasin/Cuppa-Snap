@@ -18,7 +18,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('pages.app.orders');
+        return view('pages.app.orders', [
+            'data' => Order::where('user_id', Auth::user()->id)->get()
+        ]);
     }
 
     /**

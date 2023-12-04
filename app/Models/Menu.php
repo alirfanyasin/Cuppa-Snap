@@ -21,4 +21,14 @@ class Menu extends Model
     {
         return $this->hasMany(Cart::class, 'menu_id');
     }
+
+    /**
+     * Get all of the order for the Menu
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, 'menu_id');
+    }
 }
