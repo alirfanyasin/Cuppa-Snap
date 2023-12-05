@@ -48,6 +48,7 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::put('app/menu/{id}/update', [MenuController::class, 'update'])->name('app.menu.update');
     Route::delete('app/menu/{id}/destroy', [MenuController::class, 'destroy'])->name('app.menu.destroy');
     Route::get('app/orders', [OrderController::class, 'index'])->name('app.orders');
+    Route::get('app/orders/{user_id}/show', [OrderController::class, 'show'])->name('app.orders.show');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
