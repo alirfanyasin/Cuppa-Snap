@@ -99,14 +99,14 @@
                   <option value="On-Site">On-Site</option>
                 </select>
                 <label for="order-type">Order Type</label>
-                @error('order-type')
+                @error('order_type')
                   <small class="text-white">{{ $message }}</small>
                 @enderror
               </div>
               <div class="form-floating mb-3 order-type" hidden>
                 <input type="number" name="phone_number" class="form-control" id="phone-number" placeholder="0.000">
                 <label for="phone-number">Phone Number</label>
-                @error('price')
+                @error('phone_number')
                   <small class="text-white">{{ $message }}</small>
                 @enderror
               </div>
@@ -126,7 +126,7 @@
                   <option value="Cash">Cash</option>
                 </select>
                 <label for="payment-method">Payment Method</label>
-                @error('payment-method')
+                @error('payment_method')
                   <small class="text-white">{{ $message }}</small>
                 @enderror
               </div>
