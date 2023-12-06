@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -18,8 +19,20 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Done', 'Canceled', 'Rejected'])->orderBy('id', 'DESC')->get()->groupBy('code');
+
+        $filterData = $data->map(function ($group) {
+            return $group->first();
+        });
+
+        $filterData->transform(function ($item) {
+            $item->created_at = Carbon::parse($item->created_at);
+            return $item;
+        });
+
+
         return view('pages.app.orders', [
-            'data' => Order::where('user_id', Auth::user()->id)->get()
+            'data' => $filterData
         ]);
     }
 
@@ -78,9 +91,26 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $code)
     {
-        //
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Rejected', 'Done', 'Canceled'])->orderBy('id', 'DESC')->get()->groupBy('code');
+
+        $filteredData = $data->map(function ($group) {
+            return $group->first();
+        });
+        $order = Order::where(['code' => $code])->get();
+        $dataBuyer = Order::where('code', $code)->first();
+
+        if (!$order) {
+            return abort(404);
+        }
+
+        // Kirim data pesanan ke view detail
+        return view('pages.app.orders_show_pelanggan', [
+            'data' => $filteredData,
+            'order' => $order,
+            'dataBuyer' => $dataBuyer
+        ]);
     }
 
     /**

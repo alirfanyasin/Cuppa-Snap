@@ -10,7 +10,8 @@
       </ol>
     </nav>
   </header>
-  @role('kasir')
+
+  @role('pelanggan')
     <div class="container px-5 mt-4">
       <div class="row">
         <div class="col-md-8 mb-3">
@@ -33,7 +34,7 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Orderer</th>
+                        <th scope="col">Code</th>
                         <th scope="col">Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -44,44 +45,44 @@
                         $no = 1;
                       @endphp
                       @foreach ($data as $item)
-                        @if ($item->status == 'Pending' || $item->status == 'Process')
-                          <tr>
-                            <th scope="row">{{ $no++ }}</th>
-                            <td>{{ $item->user->name }}</td>
-                            <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
-                            <td><span
-                                class="badge {{ $item->status == 'Pending' ? 'text-bg-warning' : '' }} {{ $item->status == 'Process' ? 'text-bg-primary' : '' }}">{{ $item->status }}</span>
-                            </td>
-                            <td>
-                              <a href="{{ route('app.orders.show', ['code' => $item->code, 'id' => $item->id]) }}"
-                                class="text-white text-decoration-none d-inline-block rounded-3"
-                                style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
-                                <span class="d-flex justify-content-center align-items-center ">
-                                  <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
-                                </span>
-                              </a>
-                              <form action="{{ route('app.orders.confirmed', $item->code) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                                  style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
-                                    class="d-flex justify-content-center align-items-center ">
-                                    <iconify-icon icon="mingcute:check-line" width="25px"></iconify-icon>
-                                  </span></button>
-                              </form>
-                              <form action="{{ route('app.orders.rejected', $item->code) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                                  style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
-                                    class="d-flex justify-content-center align-items-center ">
-                                    <iconify-icon icon="uil:times" width="25px"></iconify-icon>
-                                  </span></button>
-                              </form>
-                            </td>
-                          </tr>
+                        @if ($item->user_id == Auth::user()->id)
+                          @if ($item->status == 'Pending' || $item->status == 'Process')
+                            <tr>
+                              <th scope="row">{{ $no++ }}</th>
+                              <td>{{ $item->code }}</td>
+                              <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
+                              <td><span
+                                  class="badge {{ $item->status == 'Pending' ? 'text-bg-warning' : '' }} {{ $item->status == 'Process' ? 'text-bg-primary' : '' }}">{{ $item->status }}</span>
+                              </td>
+                              <td>
+                                <a href="{{ route('orders.show', ['code' => $item->code, 'id' => $item->id]) }}"
+                                  class="text-white text-decoration-none d-inline-block rounded-3"
+                                  style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                                  <span class="d-flex justify-content-center align-items-center ">
+                                    <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
+                                  </span>
+                                </a>
+                                <form action="{{ route('orders.confirmed', $item->code) }}" method="POST" class="d-inline">
+                                  @csrf
+                                  @method('PUT')
+                                  <button type="submit" class="text-white border-0 d-inline-block rounded-3"
+                                    style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
+                                      class="d-flex justify-content-center align-items-center ">
+                                      <iconify-icon icon="mingcute:check-line" width="25px"></iconify-icon>
+                                    </span></button>
+                                </form>
+                                <form action="{{ route('orders.rejected', $item->code) }}" method="POST" class="d-inline">
+                                  @csrf
+                                  @method('PUT')
+                                  <button type="submit" class="text-white border-0 d-inline-block rounded-3"
+                                    style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
+                                      class="d-flex justify-content-center align-items-center ">
+                                      <iconify-icon icon="uil:times" width="25px"></iconify-icon>
+                                    </span></button>
+                                </form>
+                              </td>
+                            </tr>
+                          @endif
                         @endif
                       @endforeach
                     </tbody>
@@ -95,7 +96,7 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Orderer</th>
+                      <th scope="col">Code</th>
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
@@ -106,34 +107,36 @@
                       $no = 1;
                     @endphp
                     @foreach ($data as $item)
-                      @if ($item->status == 'Rejected' || $item->status == 'Canceled')
-                        <tr>
-                          <th scope="row">{{ $no++ }}</th>
-                          <td>{{ $item->user->name }}</td>
-                          <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
-                          <td><span
-                              class="badge {{ $item->status == 'Rejected' ? 'text-bg-danger' : '' }} {{ $item->status == 'Canceled' ? 'text-bg-danger' : '' }}">{{ $item->status }}</span>
-                          </td>
-                          <td>
-                            <a href="{{ route('app.orders.show', ['code' => $item->code, 'id' => $item->id]) }}"
-                              class="text-white text-decoration-none d-inline-block rounded-3"
-                              style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
-                              <span class="d-flex justify-content-center align-items-center ">
-                                <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
-                              </span>
-                            </a>
-                            <form action="{{ route('app.orders.rejected', $item->user_id) }}" method="POST"
-                              class="d-inline">
-                              @csrf
-                              @method('PUT')
-                              <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                                style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
-                                  class="d-flex justify-content-center align-items-center ">
-                                  <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
-                                </span></button>
-                            </form>
-                          </td>
-                        </tr>
+                      @if ($item->user_id == Auth::user()->id)
+                        @if ($item->status == 'Rejected' || $item->status == 'Canceled')
+                          <tr>
+                            <th scope="row">{{ $no++ }}</th>
+                            <td>{{ $item->code }}</td>
+                            <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
+                            <td><span
+                                class="badge {{ $item->status == 'Rejected' ? 'text-bg-danger' : '' }} {{ $item->status == 'Canceled' ? 'text-bg-danger' : '' }}">{{ $item->status }}</span>
+                            </td>
+                            <td>
+                              <a href="{{ route('orders.show', ['code' => $item->code, 'id' => $item->id]) }}"
+                                class="text-white text-decoration-none d-inline-block rounded-3"
+                                style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                                <span class="d-flex justify-content-center align-items-center ">
+                                  <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
+                                </span>
+                              </a>
+                              <form action="{{ route('orders.rejected', $item->user_id) }}" method="POST"
+                                class="d-inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="text-white border-0 d-inline-block rounded-3"
+                                  style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
+                                    class="d-flex justify-content-center align-items-center ">
+                                    <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
+                                  </span></button>
+                              </form>
+                            </td>
+                          </tr>
+                        @endif
                       @endif
                     @endforeach
                   </tbody>

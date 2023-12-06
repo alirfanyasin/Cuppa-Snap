@@ -62,4 +62,7 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::post('/update-quantity/{itemId}', [CartController::class, 'updateQuantity'])->name('update-qty');
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
     Route::post('order/store', [UserOrderController::class, 'store'])->name('order.store');
+    Route::get('orders/{code}/show', [UserOrderController::class, 'show'])->name('orders.show');
+    Route::put('orders/{code}/confirmed', [UserOrderController::class, 'confirmed'])->name('orders.confirmed');
+    Route::put('orders/{code}/rejected', [UserOrderController::class, 'rejected'])->name('orders.rejected');
 });
