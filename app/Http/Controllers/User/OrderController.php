@@ -51,6 +51,7 @@ class OrderController extends Controller
         $quantities = $request->input('quantity');
 
         // Attach menu items to the order
+        $commonCode = Str::random(8);
         foreach ($menuIds as $key => $menuId) {
             $orderItem = new Order([
                 'user_id' => $user->id,
@@ -59,7 +60,7 @@ class OrderController extends Controller
                 'address' => $request->input('address'),
                 'payment_method' => $request->input('payment_method'),
                 'status' => 'Pending',
-                'code' => Str::random(8),
+                'code' => $commonCode,
                 'menu_id' => $menuId,
                 'quantity' => $quantities[$key],
             ]);

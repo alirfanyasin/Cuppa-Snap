@@ -48,7 +48,9 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::put('app/menu/{id}/update', [MenuController::class, 'update'])->name('app.menu.update');
     Route::delete('app/menu/{id}/destroy', [MenuController::class, 'destroy'])->name('app.menu.destroy');
     Route::get('app/orders', [OrderController::class, 'index'])->name('app.orders');
-    Route::get('app/orders/{user_id}/show', [OrderController::class, 'show'])->name('app.orders.show');
+    Route::get('app/orders/{code}/show', [OrderController::class, 'show'])->name('app.orders.show');
+    Route::put('app/orders/{code}/confirmed', [OrderController::class, 'confirmed'])->name('app.orders.confirmed');
+    Route::put('app/orders/{code}/rejected', [OrderController::class, 'rejected'])->name('app.orders.rejected');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
