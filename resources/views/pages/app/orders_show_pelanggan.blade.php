@@ -62,22 +62,81 @@
                                     <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                   </span>
                                 </a>
-                                <form action="{{ route('orders.confirmed', $item->code) }}" method="POST" class="d-inline">
+                                @if ($item->status != 'Pending')
+                                  <form action="{{ route('orders.confirmed', $item->code) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="text-white border-0 d-inline-block rounded-3"
+                                      style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
+                                        class="d-flex justify-content-center align-items-center ">
+                                        <iconify-icon icon="mingcute:check-line" width="25px"></iconify-icon>
+                                      </span></button>
+                                  </form>
+                                @endif
+                                @if ($item->status != 'Process')
+                                  <form action="{{ route('orders.canceled', $item->code) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="text-white border-0 d-inline-block rounded-3"
+                                      style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
+                                        class="d-flex justify-content-center align-items-center ">
+                                        <iconify-icon icon="uil:times" width="25px"></iconify-icon>
+                                      </span></button>
+                                  </form>
+                                @endif
+                              </td>
+                            </tr>
+                          @endif
+                        @endif
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-done" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                <div class="table-responsive">
+                  <table class="table align-middle">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @php
+                        $no = 1;
+                      @endphp
+                      @foreach ($data as $item)
+                        @if ($item->user_id == Auth::user()->id)
+                          @if ($item->status == 'Done')
+                            <tr>
+                              <th scope="row">{{ $no++ }}</th>
+                              <td>{{ $item->code }}</td>
+                              <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
+                              <td><span
+                                  class="badge {{ $item->status == 'Done' ? 'text-bg-success' : '' }}">{{ $item->status }}</span>
+                              </td>
+                              <td>
+                                <a href="{{ route('orders.show', ['code' => $item->code, 'id' => $item->id]) }}"
+                                  class="text-white text-decoration-none d-inline-block rounded-3"
+                                  style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                                  <span class="d-flex justify-content-center align-items-center ">
+                                    <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
+                                  </span>
+                                </a>
+                                <form action="{{ route('orders.destroy', $item->code) }}" method="POST"
+                                  class="d-inline">
                                   @csrf
-                                  @method('PUT')
+                                  @method('DELETE')
                                   <button type="submit" class="text-white border-0 d-inline-block rounded-3"
                                     style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
                                       class="d-flex justify-content-center align-items-center ">
-                                      <iconify-icon icon="mingcute:check-line" width="25px"></iconify-icon>
-                                    </span></button>
-                                </form>
-                                <form action="{{ route('orders.rejected', $item->code) }}" method="POST" class="d-inline">
-                                  @csrf
-                                  @method('PUT')
-                                  <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                                    style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
-                                      class="d-flex justify-content-center align-items-center ">
-                                      <iconify-icon icon="uil:times" width="25px"></iconify-icon>
+                                      <iconify-icon icon="fluent:delete-12-regular" width="25px"></iconify-icon>
                                     </span></button>
                                 </form>
                               </td>
@@ -89,9 +148,8 @@
                   </table>
                 </div>
               </div>
-              <div class="tab-pane fade" id="nav-done" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                ...</div>
-              <div class="tab-pane fade" id="nav-canceled" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+              <div class="tab-pane fade" id="nav-canceled" role="tabpanel" aria-labelledby="nav-contact-tab"
+                tabindex="0">
                 <table class="table align-middle">
                   <thead>
                     <tr>
@@ -124,10 +182,9 @@
                                   <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                 </span>
                               </a>
-                              <form action="{{ route('orders.rejected', $item->user_id) }}" method="POST"
-                                class="d-inline">
+                              <form action="{{ route('orders.destroy', $item->code) }}" method="POST" class="d-inline">
                                 @csrf
-                                @method('PUT')
+                                @method('DELETE')
                                 <button type="submit" class="text-white border-0 d-inline-block rounded-3"
                                   style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );"><span
                                     class="d-flex justify-content-center align-items-center ">
@@ -158,7 +215,7 @@
                 <h5>{{ $dataBuyer->user->name }}</h5>
                 <div>{{ $dataBuyer->user->email }}</div>
                 <div class="table-responsive mt-4">
-                  <table class="table text-start">
+                  <table class="table text-start" id="table-custom">
                     <tr>
                       <td>Order Type</td>
                       <td>:</td>
@@ -244,6 +301,11 @@
     .table td,
     .table th {
       white-space: nowrap;
+    }
+
+    #table-custom td,
+    #table-custom th {
+      white-space: normal;
     }
   </style>
 @endsection

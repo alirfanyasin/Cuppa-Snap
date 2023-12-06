@@ -51,6 +51,7 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::get('app/orders/{code}/show', [OrderController::class, 'show'])->name('app.orders.show');
     Route::put('app/orders/{code}/confirmed', [OrderController::class, 'confirmed'])->name('app.orders.confirmed');
     Route::put('app/orders/{code}/rejected', [OrderController::class, 'rejected'])->name('app.orders.rejected');
+    Route::delete('app/orders/{code}/destroy', [OrderController::class, 'destroy'])->name('app.orders.destroy');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
@@ -64,5 +65,6 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::post('order/store', [UserOrderController::class, 'store'])->name('order.store');
     Route::get('orders/{code}/show', [UserOrderController::class, 'show'])->name('orders.show');
     Route::put('orders/{code}/confirmed', [UserOrderController::class, 'confirmed'])->name('orders.confirmed');
-    Route::put('orders/{code}/rejected', [UserOrderController::class, 'rejected'])->name('orders.rejected');
+    Route::put('orders/{code}/canceled', [UserOrderController::class, 'canceled'])->name('orders.canceled');
+    Route::delete('orders/{code}/destroy', [UserOrderController::class, 'destroy'])->name('orders.destroy');
 });

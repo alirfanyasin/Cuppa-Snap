@@ -113,6 +113,35 @@ class OrderController extends Controller
         ]);
     }
 
+
+    public function confirmed($code)
+    {
+
+        $orders = Order::where('code', $code)->get();
+
+        // $orderOne = Order::where('code', $code)->first();
+
+        // if($orderOne->status != 'Pending') {
+
+        // }
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Done']);
+        }
+        return redirect()->route('orders')->with('success', 'Confirmed orders successfully');
+    }
+
+    public function canceled($code)
+    {
+        $orders = Order::where('code', $code)->get();
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Canceled']);
+        }
+
+        return redirect()->route('orders')->with('success', 'Rejected orders successfully');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -132,8 +161,14 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $code)
     {
-        //
+        $data = Order::where('code', $code)->get();
+
+        foreach ($data as $item) {
+            $item->delete();
+        }
+
+        return redirect()->route('orders')->with('success', 'Deleted order successfully');
     }
 }
