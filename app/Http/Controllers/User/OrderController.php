@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -18,8 +19,20 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Done', 'Canceled', 'Rejected'])->orderBy('id', 'DESC')->get()->groupBy('code');
+
+        $filterData = $data->map(function ($group) {
+            return $group->first();
+        });
+
+        $filterData->transform(function ($item) {
+            $item->created_at = Carbon::parse($item->created_at);
+            return $item;
+        });
+
+
         return view('pages.app.orders', [
-            'data' => Order::where('user_id', Auth::user()->id)->get()
+            'data' => $filterData
         ]);
     }
 
@@ -78,9 +91,55 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $code)
     {
-        //
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Rejected', 'Done', 'Canceled'])->orderBy('id', 'DESC')->get()->groupBy('code');
+
+        $filteredData = $data->map(function ($group) {
+            return $group->first();
+        });
+        $order = Order::where(['code' => $code])->get();
+        $dataBuyer = Order::where('code', $code)->first();
+
+        if (!$order) {
+            return abort(404);
+        }
+
+        // Kirim data pesanan ke view detail
+        return view('pages.app.orders_show_pelanggan', [
+            'data' => $filteredData,
+            'order' => $order,
+            'dataBuyer' => $dataBuyer
+        ]);
+    }
+
+
+    public function confirmed($code)
+    {
+
+        $orders = Order::where('code', $code)->get();
+
+        // $orderOne = Order::where('code', $code)->first();
+
+        // if($orderOne->status != 'Pending') {
+
+        // }
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Done']);
+        }
+        return redirect()->route('orders')->with('success', 'Confirmed orders successfully');
+    }
+
+    public function canceled($code)
+    {
+        $orders = Order::where('code', $code)->get();
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Canceled']);
+        }
+
+        return redirect()->route('orders')->with('success', 'Rejected orders successfully');
     }
 
     /**
@@ -102,8 +161,14 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $code)
     {
-        //
+        $data = Order::where('code', $code)->get();
+
+        foreach ($data as $item) {
+            $item->delete();
+        }
+
+        return redirect()->route('orders')->with('success', 'Deleted order successfully');
     }
 }

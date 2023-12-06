@@ -116,8 +116,14 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $code)
     {
-        //
+        $data = Order::where('code', $code)->get();
+
+        foreach ($data as $item) {
+            $item->delete();
+        }
+
+        return redirect()->route('app.orders')->with('success', 'Deleted order successfully');
     }
 }
