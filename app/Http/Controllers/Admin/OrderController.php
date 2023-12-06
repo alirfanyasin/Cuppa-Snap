@@ -16,9 +16,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $data = Order::where(['status' => 'Pending'])->get()->groupBy('user_id');
+        // $data = Order::where(['status' => 'Pending'])->orderBy('id', 'DESC')->get()->groupBy('user_id');
 
-        $data = Order::where(['status' => 'Pending'])->get()->groupBy('user_id');
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Rejected', 'Done', 'Canceled'])->orderBy('id', 'DESC')->get()->groupBy('code');
         $filteredData = $data->map(function ($group) {
             return $group->first();
         });
@@ -26,10 +26,6 @@ class OrderController extends Controller
             $item->created_at = Carbon::parse($item->created_at);
             return $item;
         });
-        // Ambil satu record untuk setiap user_id
-        // $filteredData = $data->map(function ($group) {
-        //     return $group->first();
-        // });
 
         return view('pages.app.orders', [
             'data' => $filteredData
@@ -54,21 +50,18 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($user_id)
+    public function show($code)
     {
-        $data = Order::where(['status' => 'Pending'])->get()->groupBy('user_id');
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Rejected', 'Done', 'Canceled'])->orderBy('id', 'DESC')->get()->groupBy('code');
 
-        // Ambil satu record untuk setiap user_id
         $filteredData = $data->map(function ($group) {
             return $group->first();
         });
-        // Ambil pesanan sesuai dengan user_id dan order_id
-        $order = Order::where(['user_id' => $user_id])->get();
-        $dataBuyer = Order::where('user_id', $user_id)->first();
+        $order = Order::where(['code' => $code])->get();
+        $dataBuyer = Order::where('code', $code)->first();
 
-        // Jika pesanan tidak ditemukan, mungkin hendak menampilkan pesan kesalahan atau redirect ke halaman lain
         if (!$order) {
-            return abort(404); // Atau redirect ke halaman lain
+            return abort(404);
         }
 
         // Kirim data pesanan ke view detail
@@ -77,6 +70,30 @@ class OrderController extends Controller
             'order' => $order,
             'dataBuyer' => $dataBuyer
         ]);
+    }
+
+
+    public function confirmed($code)
+    {
+        $orders = Order::where('code', $code)->get();
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Process']);
+        }
+
+        return redirect()->route('app.orders')->with('success', 'Confirmed orders successfully');
+    }
+
+
+    public function rejected($code)
+    {
+        $orders = Order::where('code', $code)->get();
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Rejected']);
+        }
+
+        return redirect()->route('app.orders')->with('success', 'Rejected orders successfully');
     }
 
 
