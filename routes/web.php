@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\TableNumberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\CartController;
@@ -52,6 +53,10 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::put('app/orders/{code}/confirmed', [OrderController::class, 'confirmed'])->name('app.orders.confirmed');
     Route::put('app/orders/{code}/rejected', [OrderController::class, 'rejected'])->name('app.orders.rejected');
     Route::delete('app/orders/{code}/destroy', [OrderController::class, 'destroy'])->name('app.orders.destroy');
+    Route::get('app/table-number', [TableNumberController::class, 'index'])->name('app.table_number');
+    Route::get('app/table-number/read', [TableNumberController::class, 'getData'])->name('app.table_number.read');
+    Route::post('app/table-number/store', [TableNumberController::class, 'store'])->name('app.table_number.store');
+    Route::post('app/table-number/{id}/update', [TableNumberController::class, 'update'])->name('app.table_number.update');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
