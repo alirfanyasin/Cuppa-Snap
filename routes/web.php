@@ -57,6 +57,7 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::get('app/table-number/read', [TableNumberController::class, 'getData'])->name('app.table_number.read');
     Route::post('app/table-number/store', [TableNumberController::class, 'store'])->name('app.table_number.store');
     Route::post('app/table-number/{id}/update', [TableNumberController::class, 'update'])->name('app.table_number.update');
+    Route::post('app/table-number/{id}/destroy', [TableNumberController::class, 'destroy'])->name('app.table_number.destroy');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {

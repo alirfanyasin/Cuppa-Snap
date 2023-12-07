@@ -17,9 +17,13 @@
           data-bs-target="#editTableModal-{{ $item->id }}">
           <iconify-icon icon="uil:edit" width="20px"></iconify-icon>
         </button>
-        <a href="" class="text-decoration-none text-white d-inline-block">
-          <iconify-icon icon="fluent:delete-12-regular" width="20px"></iconify-icon>
-        </a>
+        <form action="{{ route('app.table_number.destroy', $item->id) }}" method="POST" class="d-inline"
+          id="btnDelete">
+          @csrf
+          <button type="submit" class="bg-transparent border-0 ext-decoration-none text-white d-inline-block">
+            <iconify-icon icon="fluent:delete-12-regular" width="20px"></iconify-icon>
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -79,6 +83,7 @@
         type: 'POST',
         url: $(this).attr('action'),
         data: data,
+        dataType: 'json',
         processData: false,
         contentType: false,
         success: function(response) {
@@ -91,5 +96,21 @@
         }
       });
     });
+
+    $('#btnDelete').on('submit', function(event) {
+      event.preventDefault()
+
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        dataType: 'json',
+        success: function(response) {
+          getData()
+        },
+        error: function(xhr, status, error) {
+          console.log(error)
+        }
+      })
+    })
   </script>
 @endforeach

@@ -85,6 +85,11 @@ class TableNumberController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = TableNumber::findOrFail($id);
+
+        $data->delete();
+
+        return redirect()->route('app.table_number');
+        // return response()->json(['message', 'Deleted data successfully']);
     }
 }
