@@ -184,7 +184,7 @@
                                     <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                   </span>
                                 </a>
-                                <form action="{{ route('app.orders.destroy', $item->code) }}" method="POST"
+                                <form action="{{ route('orders.destroy', $item->code) }}" method="POST"
                                   class="d-inline">
                                   @csrf
                                   @method('DELETE')
