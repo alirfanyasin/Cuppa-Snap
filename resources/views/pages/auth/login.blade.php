@@ -31,7 +31,7 @@
       </div>
       <div class="my-5">
         <button type="submit" class="btn-custom-secondary btn-button mb-3">LOGIN</button>
-        <a href="#" class="btn-custom-secondary btn-a text-decoration-none d-inline-block">
+        <a href="{{ route('auth.google') }}" class="btn-custom-secondary btn-a text-decoration-none d-inline-block">
           <div class="d-flex justify-content-center align-items-center">
             <iconify-icon icon="devicon:google" width="30px"></iconify-icon>&nbsp;&nbsp; Login with Google
           </div>

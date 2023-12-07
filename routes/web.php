@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\TableNumberController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\CartController;
@@ -38,6 +39,10 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [LoginController::class, 'login'])->name('login.post');
     Route::get('register', [RegisterController::class, 'index'])->name('register');
     Route::post('register', [RegisterController::class, 'register'])->name('register.post');
+
+    // LOGIN WITH GOOGLE
+    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('auth/google/callback', [GoogleController::class, 'handelGoogleCallback'])->name('auth.google.callback');
 });
 
 Route::middleware(['auth', 'role:kasir'])->group(function () {
