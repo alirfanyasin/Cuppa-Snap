@@ -2,7 +2,9 @@
   <div class="container-fluid">
 
     <div class="d-md-none d-block">
-      <button class="bg-transparent border-0 text-white"><iconify-icon icon="material-symbols:menu"
+      <button class="bg-transparent border-0 text-white" id="btnMenu"><iconify-icon icon="material-symbols:menu"
+          width="40px"></iconify-icon></button>
+      <button class="bg-transparent border-0 text-white" id="btnClose"><iconify-icon icon="uil:times"
           width="40px"></iconify-icon></button>
     </div>
 
@@ -11,7 +13,6 @@
     <div class="mx-auto d-md-none d-block" id="logo-navbar">
       <img src="{{ asset('assets/img/logo-second.png') }}" alt="Logo" class="" width="100px">
     </div>
-
 
     <div class="d-flex justify-content-end align-items-center">
       <div class="name me-3" id="nav-name">
@@ -47,3 +48,31 @@
     </div>
   </div>
 </nav>
+
+
+<script>
+  var btnMenu = document.querySelector('#btnMenu');
+  var btnClose = document.querySelector('#btnClose');
+  var aside = document.querySelector('aside');
+
+  // Initially, hide btnClose
+  btnClose.style.display = 'none';
+
+  btnMenu.addEventListener('click', function(event) {
+    event.preventDefault();
+    aside.classList.toggle('hidden-aside');
+
+    // Toggle visibility of buttons based on the presence of hidden-aside class
+    btnMenu.style.display = aside.classList.contains('hidden-aside') ? 'block' : 'none';
+    btnClose.style.display = aside.classList.contains('hidden-aside') ? 'none' : 'block';
+  });
+
+  btnClose.addEventListener('click', function(event) {
+    event.preventDefault();
+    aside.classList.toggle('hidden-aside');
+
+    // Toggle visibility of buttons based on the presence of hidden-aside class
+    btnMenu.style.display = aside.classList.contains('hidden-aside') ? 'block' : 'none';
+    btnClose.style.display = aside.classList.contains('hidden-aside') ? 'none' : 'block';
+  });
+</script>

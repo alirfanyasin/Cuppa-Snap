@@ -1,4 +1,4 @@
-<aside class="bg-glass-sidebar p-4">
+<aside class="bg-glass-sidebar hidden-aside">
   <header class="d-flex justify-content-center">
     <img src="{{ asset('assets/img/logo-second.png') }}" alt="" width="200px">
   </header>

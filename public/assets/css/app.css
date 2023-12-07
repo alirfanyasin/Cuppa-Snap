@@ -132,6 +132,7 @@ aside {
   /* width: 400px; */
   width: 22%;
   height: 100vh;
+  padding: 40px;
 }
 aside ul {
   padding:0;
@@ -199,7 +200,17 @@ div.bg-glass::-webkit-scrollbar-thumb {
 /* =============== Responsive =============== */
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
+  .hidden-aside {
+    display: none;
+  }
   aside {
+    width: 100%;
+    z-index: 999;
+    position: absolute;
+    padding-top: 100px;
+  }
+
+  aside header img{ 
     display: none;
   }
 
