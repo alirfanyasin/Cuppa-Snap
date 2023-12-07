@@ -118,6 +118,18 @@
                   <small class="text-white">{{ $message }}</small>
                 @enderror
               </div>
+              <div class="form-floating mb-3 order-type-on-site" hidden>
+                <select class="form-select" name="table_number" id="table-number" aria-label="Default select example">
+                  @foreach ($dataTable as $table)
+                    <option value="{{ $table->number }}">{{ $table->number }}</option>
+                  @endforeach
+                  <option value="">No Select</option>
+                </select>
+                <label for="table-number">Table Number</label>
+                @error('table_number')
+                  <small class="text-white">{{ $message }}</small>
+                @enderror
+              </div>
               <div class="form-floating mb-3">
                 <select class="form-select" name="payment_method" id="payment-method"
                   aria-label="Default select example">
@@ -175,6 +187,7 @@
       function selectOrderType() {
         const choose = document.getElementById('order-type');
         const showInput = document.querySelectorAll('.order-type');
+        const showInputOnSite = document.querySelectorAll('.order-type-on-site');
 
         if (choose.value === 'Online') {
           showInput.forEach(element => {
@@ -182,6 +195,15 @@
           });
         } else {
           showInput.forEach(element => {
+            element.setAttribute('hidden', true);
+          });
+        }
+        if (choose.value === 'On-Site') {
+          showInputOnSite.forEach(element => {
+            element.removeAttribute('hidden');
+          });
+        } else {
+          showInputOnSite.forEach(element => {
             element.setAttribute('hidden', true);
           });
         }

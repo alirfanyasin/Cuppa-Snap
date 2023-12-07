@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Menu;
+use App\Models\TableNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,8 @@ class CartController extends Controller
         session()->forget('cart_count');
         return view('pages.app.carts', [
             'data' => Cart::where('user_id', Auth::user()->id)->get(),
-            'total' => $this->calculateTotal()
+            'total' => $this->calculateTotal(),
+            'dataTable' => TableNumber::where('status', 'Empty')->get()
         ]);
     }
 

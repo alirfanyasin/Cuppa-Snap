@@ -227,6 +227,11 @@
                       <td>{{ $dataBuyer->address }}</td>
                     </tr>
                     <tr>
+                      <td>Address</td>
+                      <td>:</td>
+                      <td>{{ $dataBuyer->table_id }}</td>
+                    </tr>
+                    <tr>
                       <td>Status</td>
                       <td>:</td>
                       <td><span

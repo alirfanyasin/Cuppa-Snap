@@ -26,7 +26,8 @@
         </a>
       </li>
       <li class="mb-2">
-        <a href="" class="d-inline-block text-decoration-none text-white">
+        <a href="{{ route('app.table_number') }}"
+          class="d-inline-block text-decoration-none text-white {{ Request::is('app/table-number') ? 'active' : '' }}">
           <div class="d-flex align-items-center"><iconify-icon icon="material-symbols:table-restaurant-outline"
               width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Table Number</span></div>
         </a>

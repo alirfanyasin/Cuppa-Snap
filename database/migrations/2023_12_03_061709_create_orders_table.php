@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('menu_id')->constrained();
+            $table->unsignedBigInteger('table_id')->nullable();
             $table->unsignedInteger('quantity')->default(1);
             $table->string('order_type');
             $table->string('phone_number')->nullable();

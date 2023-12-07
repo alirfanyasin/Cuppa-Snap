@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\TableNumber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,6 +73,7 @@ class OrderController extends Controller
                 'phone_number' => $request->input('phone_number'),
                 'address' => $request->input('address'),
                 'payment_method' => $request->input('payment_method'),
+                'table_id' => $request->input('table_number'),
                 'status' => 'Pending',
                 'code' => $commonCode,
                 'menu_id' => $menuId,
@@ -80,6 +82,9 @@ class OrderController extends Controller
 
             $orderItem->save();
         }
+
+        $dataTabelNumber = TableNumber::where('number', $request->table_number)->first();
+        $dataTabelNumber->update(['status' => 'Full']);
 
         Cart::where('user_id', $user->id)->delete();
 
