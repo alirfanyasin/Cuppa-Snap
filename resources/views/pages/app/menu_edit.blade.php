@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Menu')
 @section('content')
-  <header class="container px-5 mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
+  <header class="container mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
     <h2 class="text-white fw-semibold">Edit Menu</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb text-white">
@@ -10,7 +10,7 @@
       </ol>
     </nav>
   </header>
-  <div class="container px-5 mt-4">
+  <div class="container mt-4 responsive-content">
     <form action="{{ route('app.menu.update', $data->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('PUT')

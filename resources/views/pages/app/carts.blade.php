@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-  <header class="container px-5 mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
+  <header class="container mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
     <h2 class="text-white fw-semibold">Carts</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb text-white">
@@ -10,7 +10,7 @@
       </ol>
     </nav>
   </header>
-  <div class="container px-5 mt-4">
+  <div class="container mt-4 responsive-content">
     <div class="row">
       <div class="col mb-5">
         <div class="bg-glass text-white p-4">

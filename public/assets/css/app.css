@@ -125,6 +125,7 @@ main {
   width: calc(100vw - 22%);
   right: 0;
   top: 0;
+  padding: 0 50px;
 }
 
 aside {
@@ -156,8 +157,11 @@ aside ul li:hover {
   width: 100%;
 }
 
+
 #breadcrumb {
   padding-top: 80px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 main #content {
@@ -178,4 +182,53 @@ div.bg-glass::-webkit-scrollbar-thumb {
   background-color: #ffffff; 
   height: 10px;
   border-radius: 10px; 
+}
+
+.responsive-content {
+  padding: 0 50px;
+}
+
+#position-img-menu {
+  top: -90px;
+}
+
+
+
+
+
+/* =============== Responsive =============== */
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  aside {
+    display: none;
+  }
+
+  #navbar {
+    width: 100%;
+    left: 0;
+    padding: 0 10px;
+  }
+  #nav-name {
+    display: none;
+  }
+
+  header#breadcrumb {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  main #content {
+    width: 100%;
+  }
+
+  .responsive-content {
+    padding: 0 20px;
+  }
+
+  #position-img-menu {
+    top: -110px;
+  }
+  
+
+
 }
