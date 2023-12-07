@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Table Number')
 @section('content')
-  <header class="container px-5 mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
+  <header class="container mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
     <h2 class="text-white fw-semibold">Table Number</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb text-white">
@@ -11,7 +11,7 @@
     </nav>
   </header>
 
-  <div class="container px-5 my-3">
+  <div class="container my-3 responsive-content">
     @role('kasir')
       <button class="text-white border-0  text-decoration-none d-inline-block rounded-3"
         style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );  backdrop-filter: blur( 10px );"
@@ -23,7 +23,7 @@
     @endrole
   </div>
 
-  <div class="container px-5 my-3">
+  <div class="container my-3 responsive-content">
     <div class="row" id="dataTableNumber">
       <!-- Data will be dynamically inserted here -->
 

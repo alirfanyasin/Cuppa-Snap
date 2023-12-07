@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-  <header class="container px-5 mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
+  <header class="container mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
     <h2 class="text-white fw-semibold">Menu</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb text-white">
@@ -10,7 +10,7 @@
       </ol>
     </nav>
   </header>
-  <div class="container px-5 my-3">
+  <div class="container my-3 responsive-content">
     @role('kasir')
       <a href="{{ route('app.menu.create') }}" class="text-white text-decoration-none d-inline-block rounded-3"
         style="padding: 10px 20px; background-color: rgba( 255, 255, 255, 0.2 );  backdrop-filter: blur( 10px );">
@@ -20,15 +20,15 @@
       </a>
     @endrole
   </div>
-  <div class="container px-5" style="margin-top: 150px">
+  <div class="container responsive-content" style="margin-top: 150px">
     <div class="row">
       @foreach ($data as $item)
-        <div class="col-md-4" style="margin-bottom: 150px;">
+        <div class="col-xl-4 col-lg-6 col-12" style="margin-bottom: 150px;">
           <div class="bg-glass text-center text-white py-4 px-3 position-relative">
-            <div class="position-absolute" style="top: -80px;">
-              <img src="{{ asset('storage/menu/' . $item->image) }}" alt="photo" width="70%">
+            <div class="position-absolute" id="position-img-menu">
+              <img src="{{ asset('storage/menu/' . $item->image) }}" alt="photo" class="mx-auto" width="65%">
             </div>
-            <div class="text-white" style="margin-top: 100px; margin-bottom: 100px">
+            <div class="text-white" style="margin-top: 90px; margin-bottom: 100px">
               <h4>{{ $item->name }}</h4>
               <p class="fw-light">{{ $item->description }}</p>
 

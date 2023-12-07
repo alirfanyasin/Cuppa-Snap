@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-  <header class="container px-5 mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
+  <header class="container mt-4 d-flex justify-content-between align-items-center" id="breadcrumb">
     <h2 class="text-white fw-semibold">Create Menu</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb text-white">
@@ -10,7 +10,7 @@
       </ol>
     </nav>
   </header>
-  <div class="container px-5 mt-4">
+  <div class="container mt-4 responsive-content">
     <form action="{{ route('app.menu.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="row">
