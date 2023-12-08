@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins';
+}
+
+
+body {
+  background-image: url('../img/bg-landing.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+}
+
+main {
+  width: 100vw;
+  height: 100%;
+  background: rgba( 255, 255, 255, 0.3 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 15.5px );
+  -webkit-backdrop-filter: blur( 15.5px );
+}
+
+.bg-glass {
+  width: 100%; 
+  height: 100%; 
+  background: rgba( 255, 255, 255, 0.3 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 15.5px );
+  -webkit-backdrop-filter: blur( 15.5px );
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.50);
+}
+
+.icon-menu {
+  width: 60px;
+  height: 60px;
+  background: rgba( 255, 255, 255, 0.3 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 15.5px );
+  -webkit-backdrop-filter: blur( 15.5px );
+}
