@@ -227,7 +227,7 @@
                       <td>{{ $dataBuyer->address }}</td>
                     </tr>
                     <tr>
-                      <td>Address</td>
+                      <td>Table Number</td>
                       <td>:</td>
                       <td>{{ $dataBuyer->table_id }}</td>
                     </tr>

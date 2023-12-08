@@ -43,3 +43,30 @@ main {
   backdrop-filter: blur( 15.5px );
   -webkit-backdrop-filter: blur( 15.5px );
 }
+
+.nav-link {
+  color: #532D1B;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid white ;
+  color: #532D1B;
+}
+
+
+.img-about {
+  border-radius: 20px;
+  height: 400px;
+  width: 300px;
+}
+
+h1,h2,h3,h4,h5,h6,p, .rating {
+  color: #532D1B;
+  /* color: #FFFFFF; */
+}
+
+footer {
+  background-color: #532D1B;
+  color: #ffffff;
+  padding: 40px 0;
+}
