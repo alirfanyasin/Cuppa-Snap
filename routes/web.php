@@ -35,6 +35,10 @@ Route::get('/not-found', function () {
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('pages.guest.landing-page');
+    });
+
     Route::get('login', [LoginController::class, 'index'])->name('login');
     Route::post('login', [LoginController::class, 'login'])->name('login.post');
     Route::get('register', [RegisterController::class, 'index'])->name('register');

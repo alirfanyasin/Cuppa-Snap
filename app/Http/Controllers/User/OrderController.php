@@ -64,10 +64,11 @@ class OrderController extends Controller
         $menuIds = $request->input('menu_id');
         $quantities = $request->input('quantity');
 
+
         // Attach menu items to the order
         $commonCode = Str::random(8);
         foreach ($menuIds as $key => $menuId) {
-            $orderItem = new Order([
+            Order::create([
                 'user_id' => $user->id,
                 'order_type' => $request->input('order_type'),
                 'phone_number' => $request->input('phone_number'),
@@ -79,12 +80,13 @@ class OrderController extends Controller
                 'menu_id' => $menuId,
                 'quantity' => $quantities[$key],
             ]);
-
-            $orderItem->save();
+            // $orderItem->save();
         }
 
         $dataTabelNumber = TableNumber::where('number', $request->table_number)->first();
-        $dataTabelNumber->update(['status' => 'Full']);
+        if ($dataTabelNumber != null) {
+            $dataTabelNumber->update(['status' => 'Full']);
+        }
 
         Cart::where('user_id', $user->id)->delete();
 
