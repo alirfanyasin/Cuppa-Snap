@@ -12,7 +12,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.app.dashboard');
+        return view('pages.app.dashboard_pelanggan');
     }
 
     /**

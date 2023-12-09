@@ -24,8 +24,8 @@
       </div>
       <div class="col-md-4 mb-3">
         <div class="bg-glass text-center text-white py-4 position-relative">
-          <h1 class="fw-bold" style="font-size: 60pt;">167</h1>
-          <h5>Total Buyers</h5>
+          <h1 class="fw-bold" style="font-size: 60pt;">345</h1>
+          <h5>Total Sales</h5>
           <div class="position-absolute" style="bottom: 0; right: 0;">
             <iconify-icon icon="game-icons:coffee-beans" width="90px"
               style="color: rgba( 255, 255, 255, 0.2);"></iconify-icon>
@@ -34,8 +34,8 @@
       </div>
       <div class="col-md-4 mb-3">
         <div class="bg-glass text-center text-white py-4 position-relative">
-          <h1 class="fw-bold" style="font-size: 60pt;">45</h1>
-          <h5>Total Menu</h5>
+          <h1 class="fw-bold" style="font-size: 60pt;">345</h1>
+          <h5>Total Sales</h5>
           <div class="position-absolute" style="bottom: 0; right: 0;">
             <iconify-icon icon="game-icons:coffee-beans" width="90px"
               style="color: rgba( 255, 255, 255, 0.2);"></iconify-icon>
@@ -47,10 +47,6 @@
       <div class="col-md-8 mb-3">
         <div class="bg-glass text-start text-white p-3">
           <h5>Statistic</h5>
-
-          <div>
-            {!! $chart->container() !!}
-          </div>
         </div>
       </div>
       <div class="col-md-4 mb-3">
@@ -100,9 +96,4 @@
       </div>
     </div>
   </div>
-
-
-  <script src="{{ $chart->cdn() }}"></script>
-
-  {{ $chart->script() }}
 @endsection
