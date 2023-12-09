@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charts\MonthlyAdminChart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,11 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MonthlyAdminChart $chart)
     {
-        return view('pages.app.dashboard');
+        return view('pages.app.dashboard', [
+            'chart' => $chart->build()
+        ]);
     }
 
     /**
