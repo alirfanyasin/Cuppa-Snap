@@ -35,6 +35,7 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Code</th>
+                        <th scope="col">Payment Method</th>
                         <th scope="col">Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -44,12 +45,17 @@
                       @php
                         $no = 1;
                       @endphp
+
+
                       @foreach ($data as $item)
                         @if ($item->user_id == Auth::user()->id)
                           @if ($item->status == 'Pending' || $item->status == 'Process')
+                            <div class="d-none">
+                            </div>
                             <tr>
                               <th scope="row">{{ $no++ }}</th>
                               <td>{{ $item->code }}</td>
+                              <td>{{ $item->payment_method }}</td>
                               <td>{{ $item->created_at->diffForHumans() }}</td>
                               <td><span
                                   class="badge {{ $item->status == 'Pending' ? 'text-bg-warning' : '' }}{{ $item->status == 'Process' ? 'text-bg-primary' : '' }}">{{ $item->status }}</span>
@@ -62,6 +68,8 @@
                                     <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                   </span>
                                 </a>
+
+
                                 @if ($item->status != 'Pending')
                                   <form action="{{ route('orders.confirmed', $item->code) }}" method="POST"
                                     class="d-inline">
@@ -86,6 +94,16 @@
                                       </span></button>
                                   </form>
                                 @endif
+
+                                {{-- @if ($item->status == 'Pending' && $item->payment_method == 'Transfer')
+                                  <button type="button" id="pay-button"
+                                    class="border-0 text-white text-decoration-none d-inline-block rounded-3"
+                                    style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                                    <span class="d-flex justify-content-center align-items-center ">
+                                      <iconify-icon icon="tdesign:money" width="25px"></iconify-icon>
+                                    </span>
+                                  </button>
+                                @endif --}}
                               </td>
                             </tr>
                           @endif
@@ -427,3 +445,6 @@
     }
   </style>
 @endsection
+
+@push('script-head')
+@endpush

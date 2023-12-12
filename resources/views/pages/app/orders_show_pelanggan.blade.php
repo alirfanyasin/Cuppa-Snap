@@ -281,6 +281,17 @@
                 <div>Total : </div>
                 <h5>Rp. {{ number_format($totalPrice, 0, ',', '.') }}</h5>
               </div>
+              <hr class="border-2">
+
+              @if ($dataBuyer->status == 'Pending' && $dataBuyer->payment_method == 'Transfer')
+                <button type="button" id="pay-button" class="border-0 text-white w-100 d-block rounded-3"
+                  style="padding: 10px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                  <span class="d-flex justify-content-center align-items-center ">
+                    <iconify-icon icon="tdesign:money" width="25px"></iconify-icon> &nbsp;&nbsp;
+                    Pay Now
+                  </span>
+                </button>
+              @endif
             </div>
           </div>
         </div>
@@ -313,4 +324,65 @@
       white-space: normal;
     }
   </style>
+
+  @php
+    $newToken = $snapToken;
+  @endphp
 @endsection
+
+
+
+@push('script-body')
+  <script type="text/javascript">
+    // For example trigger on button clicked, or any time you need
+    $(document).ready(function() {
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+      console.log("CSRF Token:", csrfToken);
+
+      var payButton = document.getElementById('pay-button');
+      payButton.addEventListener('click', function() {
+
+        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token.
+        // Also, use the embedId that you defined in the div above, here.
+        window.snap.pay('{{ $dataBuyer->snapToken }}', {
+          onSuccess: function(result) {
+            console.log("Payment success!");
+            console.log(result);
+            updateStatus();
+          },
+          onPending: function(result) {
+            console.log("Waiting for payment!");
+            console.log(result);
+          },
+          onError: function(result) {
+            console.log("Payment failed!");
+            console.log(result);
+          },
+          onClose: function() {
+            console.log('Popup closed without finishing payment');
+          }
+        });
+      });
+
+
+      function updateStatus() {
+        $.ajax({
+          type: 'POST',
+          url: "{{ url('orders/update/status/' . $dataBuyer->code) }}",
+          data: {
+            status: 'Process',
+            _token: csrfToken,
+          },
+          success: function(response) {
+            // console.log(response.message);
+            window.location.href = '/orders';
+          },
+          error: function(error) {
+            console.log('Error:', error);
+          }
+        });
+      }
+    })
+  </script>
+@endpush

@@ -11,7 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
+use Midtrans\Snap;
+use PSpell\Config;
 
 class OrderController extends Controller
 {
@@ -31,9 +32,8 @@ class OrderController extends Controller
             return $item;
         });
 
-
         return view('pages.app.orders', [
-            'data' => $filterData
+            'data' => $filterData,
         ]);
     }
 
@@ -55,20 +55,17 @@ class OrderController extends Controller
             'phone_number' => 'nullable|required_if:order_type,Online',
             'address' => 'nullable|required_if:order_type,Online',
             'payment_method' => 'required',
+            'menu_id' => 'required|array',
+            'quantity' => 'required|array',
         ]);
 
-        // Assuming you are using authentication, get the authenticated user
         $user = Auth::user();
-
-        // Retrieve menu IDs and quantities from the request
-        $menuIds = $request->input('menu_id');
-        $quantities = $request->input('quantity');
-
-
-        // Attach menu items to the order
         $commonCode = Str::random(8);
-        foreach ($menuIds as $key => $menuId) {
-            Order::create([
+
+        $orderDetails = [];
+
+        foreach ($request->input('menu_id') as $key => $menuId) {
+            $orderDetails[] = [
                 'user_id' => $user->id,
                 'order_type' => $request->input('order_type'),
                 'phone_number' => $request->input('phone_number'),
@@ -78,21 +75,62 @@ class OrderController extends Controller
                 'status' => 'Pending',
                 'code' => $commonCode,
                 'menu_id' => $menuId,
-                'quantity' => $quantities[$key],
-            ]);
-            // $orderItem->save();
+                'quantity' => $request->input('quantity')[$key],
+            ];
         }
 
-        $dataTabelNumber = TableNumber::where('number', $request->table_number)->first();
-        if ($dataTabelNumber != null) {
-            $dataTabelNumber->update(['status' => 'Full']);
+        // Calculate total price for each order and create orders
+        $totalPrices = [];
+
+        foreach ($orderDetails as $orderDetail) {
+            $order = Order::create($orderDetail);
+            $subtotal = $order->menu->price * $order->quantity;
+            $totalPrices[] = $subtotal;
         }
 
+        // Calculate the overall total price
+        $totalPrice = array_sum($totalPrices);
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = config('midtrans.isProduction');
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = config('midtrans.isSanitized');
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = config('midtrans.is3ds');
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => $commonCode,
+                'gross_amount' => $totalPrice,
+            ],
+            'customer_details' => [
+                'first_name' => $user->name,
+                'email' => $user->email,
+            ],
+        ];
+
+        $snapToken = Snap::getSnapToken($params);
+
+        // Update snapToken for each order
+        Order::where('code', $commonCode)->update(['snapToken' => $snapToken]);
+
+        $dataTableNumber = TableNumber::where('number', $request->table_number)->first();
+
+        if ($dataTableNumber) {
+            $dataTableNumber->update(['status' => 'Full']);
+        }
+
+        // Clear the user's cart after placing the order
         Cart::where('user_id', $user->id)->delete();
 
-        // Return a response or redirect as needed
-        return redirect()->route('orders')->with('success', 'Order has been placed');
+        return redirect()->route('orders')->with([
+            'success' => 'Order has been placed',
+        ]);
     }
+
+
 
 
     /**
@@ -100,11 +138,15 @@ class OrderController extends Controller
      */
     public function show(string $code)
     {
-        $data = Order::whereIn('status', ['Pending', 'Process', 'Rejected', 'Done', 'Canceled'])->orderBy('id', 'DESC')->get()->groupBy('code');
+        $data = Order::whereIn('status', ['Pending', 'Process', 'Rejected', 'Done', 'Canceled'])
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->groupBy('code');
 
         $filteredData = $data->map(function ($group) {
             return $group->first();
         });
+
         $order = Order::where(['code' => $code])->get();
         $dataBuyer = Order::where('code', $code)->first();
 
@@ -112,13 +154,17 @@ class OrderController extends Controller
             return abort(404);
         }
 
+
+
         // Kirim data pesanan ke view detail
         return view('pages.app.orders_show_pelanggan', [
             'data' => $filteredData,
             'order' => $order,
-            'dataBuyer' => $dataBuyer
+            'dataBuyer' => $dataBuyer,
+            'snapToken' => $dataBuyer->snapToken
         ]);
     }
+
 
 
     public function confirmed($code)
@@ -126,17 +172,14 @@ class OrderController extends Controller
 
         $orders = Order::where('code', $code)->get();
 
-        // $orderOne = Order::where('code', $code)->first();
-
-        // if($orderOne->status != 'Pending') {
-
-        // }
-
         foreach ($orders as $order) {
             $order->update(['status' => 'Done']);
         }
         return redirect()->route('orders')->with('success', 'Confirmed orders successfully');
     }
+
+
+
 
     public function canceled($code)
     {
@@ -177,5 +220,21 @@ class OrderController extends Controller
         }
 
         return redirect()->route('orders')->with('success', 'Deleted order successfully');
+    }
+
+
+    public function updateStatus($code)
+    {
+        $orders = Order::where('code', $code)->get();
+
+        if ($orders->isEmpty()) {
+            return response()->json(['message' => 'No orders found for the given code'], 404);
+        }
+
+        foreach ($orders as $order) {
+            $order->update(['status' => 'Process']);
+        }
+
+        return response()->json(['message' => 'Success']);
     }
 }
