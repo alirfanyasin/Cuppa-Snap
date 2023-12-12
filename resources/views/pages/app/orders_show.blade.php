@@ -232,6 +232,17 @@
                       <td>{{ $dataBuyer->table_id }}</td>
                     </tr>
                     <tr>
+                      <td>Payment Status</td>
+                      <td>:</td>
+                      <td>
+                        @if ($dataBuyer->status == 'Process')
+                          <span class="badge text-bg-success">Success</span>
+                        @else
+                          <span class="badge text-bg-info">Waiting for payment</span>
+                        @endif
+                      </td>
+                    </tr>
+                    <tr>
                       <td>Status</td>
                       <td>:</td>
                       <td><span
