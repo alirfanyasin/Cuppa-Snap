@@ -24,6 +24,16 @@ class CartController extends Controller
         ]);
     }
 
+
+    public function getModal()
+    {
+        $dataModal = Cart::where('user_id', Auth::user()->id)->get();
+        return view('pages.app.modal_cart')->with([
+            'data' => $dataModal,
+            'dataTable' => TableNumber::where('status', 'Empty')->get()
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

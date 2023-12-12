@@ -56,16 +56,15 @@
               </tbody>
             </table>
           </div>
-          {{-- {{ isset($item->id) ? route('app.menu.edit', $item->id) : '#' }} --}}
           <div class="mt-3 d-flex justify-content-between align-items-center">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#checkout"
-              class="text-white text-decoration-none d-inline-block rounded-3"
+            <a href="#" onclick="getModal()" class="text-white text-decoration-none d-inline-block rounded-3"
               style="padding: 10px 10px; background-color: rgba( 255, 255, 255, 0.2 );">
               <span class="d-flex justify-content-center align-items-center ">
                 <iconify-icon icon="material-symbols:shopping-cart-checkout" class="me-2" width="25px"></iconify-icon>
                 Checkout
               </span>
             </a>
+            {{-- data-bs-toggle="modal" data-bs-target="#checkout" --}}
             <div>
               <span class="fs-4">Total : Rp.</span><span class="fs-4 fw-bold" id="total">
                 {{ number_format($total, 0, ',', '.') }}</span>
@@ -77,84 +76,8 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="checkout" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header text-white">
-            <h1 class="modal-title fs-5 text-white" id="checkoutModalLabel">Checkout</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form action="{{ route('order.store') }}" method="POST">
-            <div class="modal-body">
-              @csrf
-              @foreach ($data as $menu)
-                <input type="hidden" name="menu_id[]" value="{{ $menu->menu->id }}">
-                <input type="hidden" name="quantity[]" value="{{ $menu->quantity }}">
-              @endforeach
-              <div class="form-floating mb-3">
-                <select class="form-select" name="order_type" id="order-type" aria-label="Default select example"
-                  onchange="selectOrderType()">
-                  <option selected disabled>Choose</option>
-                  <option value="Online">Online</option>
-                  <option value="On-Site">On-Site</option>
-                </select>
-                <label for="order-type">Order Type</label>
-                @error('order_type')
-                  <small class="text-white">{{ $message }}</small>
-                @enderror
-              </div>
-              <div class="form-floating mb-3 order-type" hidden>
-                <input type="number" name="phone_number" class="form-control" id="phone-number" placeholder="0.000">
-                <label for="phone-number">Phone Number</label>
-                @error('phone_number')
-                  <small class="text-white">{{ $message }}</small>
-                @enderror
-              </div>
-
-              <div class="form-floating mb-3 order-type" hidden>
-                <input type="text" name="address" class="form-control" id="address" placeholder="Phone Number">
-                <label for="address">Address</label>
-                @error('address')
-                  <small class="text-white">{{ $message }}</small>
-                @enderror
-              </div>
-              <div class="form-floating mb-3 order-type-on-site" hidden>
-                <select class="form-select" name="table_number" id="table-number" aria-label="Default select example">
-                  @foreach ($dataTable as $table)
-                    <option value="{{ $table->number }}">{{ $table->number }}</option>
-                  @endforeach
-                  <option value="">No Select</option>
-                </select>
-                <label for="table-number">Table Number</label>
-                @error('table_number')
-                  <small class="text-white">{{ $message }}</small>
-                @enderror
-              </div>
-              <div class="form-floating mb-3">
-                <select class="form-select" name="payment_method" id="payment-method"
-                  aria-label="Default select example">
-                  <option selected disabled>Choose</option>
-                  <option value="Bank Transfer" disabled>Bank Transfer</option>
-                  <option value="Cash">Cash</option>
-                </select>
-                <label for="payment-method">Payment Method</label>
-                @error('payment_method')
-                  <small class="text-white">{{ $message }}</small>
-                @enderror
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit"
-                class="border-0  rounded-3 text-white d-flex justify-content-center align-items-center"
-                style="padding: 10px 30px;background: rgba( 255, 255, 255, 0.2 );
-            backdrop-filter: blur( 15.5px );
-            -webkit-backdrop-filter: blur( 15.5px );"><iconify-icon
-                  icon="bi:bag-check" width="20px"></iconify-icon>&nbsp;&nbsp; Create
-                Order</button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div id="getModal">
+      {{-- Modal content --}}
     </div>
 
     <style>
@@ -184,6 +107,13 @@
     </style>
 
     <script>
+      function getModal() {
+        $.get("{{ url('carts/modal') }}", {}, function(data, status) {
+          $("#getModal").html(data);
+          $('#checkout').modal('show');
+        })
+      }
+
       function selectOrderType() {
         const choose = document.getElementById('order-type');
         const showInput = document.querySelectorAll('.order-type');
@@ -209,9 +139,6 @@
         }
       }
 
-
-
-
       function updateQuantity(itemId, operation) {
         var quantityElement = document.getElementById('qty_' + itemId);
         var currentQuantity = parseInt(quantityElement.textContent);
@@ -221,6 +148,19 @@
         } else if (operation === 'decrement' && currentQuantity > 1) {
           currentQuantity--;
         }
+
+        // Update the displayed quantity
+        quantityElement.textContent = currentQuantity;
+
+        // Update the corresponding input field value in the modal
+        var inputMenuId = document.getElementById('inp_menu_id');
+        var inputQuantity = document.getElementById('inp_quantity');
+
+        if (inputMenuId && inputQuantity) {
+          inputMenuId.value = itemId;
+          inputQuantity.value = currentQuantity;
+        }
+
         var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
         $.ajax({
           type: 'POST',
@@ -232,7 +172,7 @@
             'X-CSRF-TOKEN': csrfToken
           },
           success: function(response) {
-            quantityElement.textContent = currentQuantity;
+            // Update any other elements or totals as needed
             updateTotal(response.total);
           },
           error: function(error) {
@@ -240,6 +180,35 @@
           }
         });
       }
+
+      // function updateQuantity(itemId, operation) {
+      //   var quantityElement = document.getElementById('qty_' + itemId);
+      //   var currentQuantity = parseInt(quantityElement.textContent);
+
+      //   if (operation === 'increment') {
+      //     currentQuantity++;
+      //   } else if (operation === 'decrement' && currentQuantity > 1) {
+      //     currentQuantity--;
+      //   }
+      //   var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+      //   $.ajax({
+      //     type: 'POST',
+      //     url: '/update-quantity/' + itemId,
+      //     data: {
+      //       quantity: currentQuantity
+      //     },
+      //     headers: {
+      //       'X-CSRF-TOKEN': csrfToken
+      //     },
+      //     success: function(response) {
+      //       quantityElement.textContent = currentQuantity;
+      //       updateTotal(response.total);
+      //     },
+      //     error: function(error) {
+      //       console.log('Error:', error);
+      //     }
+      //   });
+      // }
 
       function formatRupiah(angka) {
         var numberString = angka.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");

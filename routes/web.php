@@ -74,10 +74,12 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::get('menu', [UserMenuController::class, 'index'])->name('menu');
     Route::post('menu/{id}/add-to-cart', [CartController::class, 'store'])->name('add_to_card');
     Route::get('carts', [CartController::class, 'index'])->name('carts');
+    Route::get('carts/modal', [CartController::class, 'getModal'])->name('carts.modal');
     Route::delete('carts/{id}/destroy', [CartController::class, 'destroy'])->name('carts.destroy');
     Route::post('/update-quantity/{itemId}', [CartController::class, 'updateQuantity'])->name('update-qty');
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders');
     Route::post('order/store', [UserOrderController::class, 'store'])->name('order.store');
+    Route::post('orders/update/status/{code}', [UserOrderController::class, 'updateStatus'])->name('orders.update.status');
     Route::get('orders/{code}/show', [UserOrderController::class, 'show'])->name('orders.show');
     Route::put('orders/{code}/confirmed', [UserOrderController::class, 'confirmed'])->name('orders.confirmed');
     Route::put('orders/{code}/canceled', [UserOrderController::class, 'canceled'])->name('orders.canceled');
