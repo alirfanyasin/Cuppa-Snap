@@ -58,7 +58,7 @@
       <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
           <div class="col-md-6">
-            <h1 class="fw-bold" style="font-size: 40pt;">Life Begins After <span class="text-white">Coffee</span> <br>
+            <h1 class="fw-bold tagline">Life Begins After <span class="text-white">Coffee</span> <br>
               Indulge in the
               Essence
               of Good
@@ -66,16 +66,7 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio inventore fuga
               nulla a aliquam eveniet
               voluptatum possimus nisi doloremque debitis?</p>
-            <div class="my-5 ">
-              <a href="{{ route('login') }}"
-                class="fw-semibold text-decoration-none px-5 d-inline-block py-3 rounded-pill btn-shop">
-                <div class="d-flex align-items-center">
-                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon>&nbsp;&nbsp; <span>Shop Now</span>
-                </div>
-              </a>
-            </div>
-
-            <div class="d-flex">
+            <div class="d-flex icon-menu-parent">
               <div class="icon-menu p-2 rounded-3 me-3">
                 <img src="{{ asset('assets/img/img-coffee-1.png') }}" alt="icon" width="100%">
               </div>
@@ -89,6 +80,16 @@
                 <img src="{{ asset('assets/img/img-coffee-4.png') }}" alt="icon" width="100%">
               </div>
             </div>
+            <div class="my-5 ">
+              <a href="{{ route('login') }}"
+                class="fw-semibold text-decoration-none px-5 d-inline-block py-3 rounded-pill btn-shop">
+                <div class="d-flex align-items-center">
+                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon>&nbsp;&nbsp; <span>Shop Now</span>
+                </div>
+              </a>
+            </div>
+
+
           </div>
           <div class="col-md-6  d-flex justify-content-center">
             <img src="{{ asset('assets/img/asset-img-1.png') }}" alt="coffee" width="90%">
@@ -134,17 +135,17 @@
 
     <section id="product" class="pb-5" style="margin-top: 150px;">
       <div class="container">
-        <header style="margin-bottom: 100px;">
+        <header style="margin-bottom: 150px;">
           <h2 class="fw-bold">Our Product</h2>
           <h4>We provide quality coffee products</h4>
         </header>
         <div class="row">
-          <div class="col-md-3 mb-3">
-            <div class="bg-glass text-center text-white py-4 px-3 position-relative">
-              <div class="position-absolute" id="position-img-menu" style="margin-top: -100px;">
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="bg-glass text-center text-white py-4 px-3 position-relative card-product">
+              <div class="position-absolute" id="position-img-menu">
                 <img src="{{ asset('assets/img/img-1.png') }}" alt="photo" class="mx-auto" width="65%">
               </div>
-              <div class="text-white" style="margin-top: 60px; margin-bottom: 100px">
+              <div class="text-white menu-title">
                 <h4 class="fw-semibold" style="color: #532D1B;">Cappuccino</h4>
                 <p class="fw-light" style="color: #532D1B;">Lorem ipsum dolor sit amet consectetur adipisicing
                   elit.
@@ -180,12 +181,12 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 mb-3">
+          <div class="col-lg-3 col-md-6 col-12">
             <div class="bg-glass text-center text-white py-4 px-3 position-relative">
-              <div class="position-absolute" id="position-img-menu" style="margin-top: -100px;">
+              <div class="position-absolute" id="position-img-menu">
                 <img src="{{ asset('assets/img/img-2.png') }}" alt="photo" class="mx-auto" width="65%">
               </div>
-              <div class="text-white" style="margin-top: 60px; margin-bottom: 100px">
+              <div class="text-white menu-title">
                 <h4 class="fw-semibold" style="color: #532D1B;">Cappuccino</h4>
                 <p class="fw-light" style="color: #532D1B;">Lorem ipsum dolor sit amet consectetur adipisicing
                   elit.
@@ -223,12 +224,12 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 mb-3">
+          <div class="col-lg-3 col-md-6 col-12">
             <div class="bg-glass text-center text-white py-4 px-3 position-relative">
-              <div class="position-absolute" id="position-img-menu" style="margin-top: -100px;">
+              <div class="position-absolute" id="position-img-menu">
                 <img src="{{ asset('assets/img/img-3.png') }}" alt="photo" class="mx-auto" width="65%">
               </div>
-              <div class="text-white" style="margin-top: 60px; margin-bottom: 100px">
+              <div class="text-white menu-title">
                 <h4 class="fw-semibold" style="color: #532D1B;">Cappuccino</h4>
                 <p class="fw-light" style="color: #532D1B;">Lorem ipsum dolor sit amet consectetur adipisicing
                   elit.
@@ -264,12 +265,12 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 mb-3">
+          <div class="col-lg-3 col-md-6 col-12">
             <div class="bg-glass text-center text-white py-4 px-3 position-relative">
-              <div class="position-absolute" id="position-img-menu" style="margin-top: -100px;">
+              <div class="position-absolute" id="position-img-menu">
                 <img src="{{ asset('assets/img/img-4.png') }}" alt="photo" class="mx-auto" width="65%">
               </div>
-              <div class="text-white" style="margin-top: 60px; margin-bottom: 100px">
+              <div class="text-white menu-title">
                 <h4 class="fw-semibold" style="color: #532D1B;">Cappuccino</h4>
                 <p class="fw-light" style="color: #532D1B;">Lorem ipsum dolor sit amet consectetur adipisicing
                   elit.
@@ -314,10 +315,10 @@
     <footer>
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <img src="{{ asset('assets/img/logo-second.png') }}" alt="" width="300px">
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 mb-4 col-6">
             <div class="fs-5 fw-semibold">Quick Link</div>
             <div>
               <a href="#hero" class="fw-light d-block text-decoration-none text-white">Home</a>
@@ -327,7 +328,7 @@
               <a href="{{ route('register') }}" class="fw-light d-block text-decoration-none text-white">Register</a>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 mb-4 col-6">
             <div class="fs-5 fw-semibold">Feature</div>
             <div>
               <div class="fw-light">Choice table number</div>
@@ -335,7 +336,7 @@
               <div class="fw-light">Simple Order</div>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 mb-4 col-6">
             <div class="fs-5 fw-semibold">Social Media</div>
             <div>
               <div class="fw-light d-flex align-items-center"><iconify-icon icon="iconoir:instagram"
@@ -346,7 +347,7 @@
                   width="20px"></iconify-icon>&nbsp;&nbsp;Facebook</div>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 mb-4 col-6">
             <div class="fs-5 fw-semibold">Contact</div>
             <div>
               <div class="fw-light d-flex align-items-center"><iconify-icon icon="ic:baseline-whatsapp"
