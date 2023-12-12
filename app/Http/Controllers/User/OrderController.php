@@ -11,8 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
-
+use Midtrans\Snap;
+use PSpell\Config;
 
 class OrderController extends Controller
 {
@@ -60,12 +60,12 @@ class OrderController extends Controller
         ]);
 
         $user = Auth::user();
-
         $commonCode = Str::random(8);
 
+        $orderDetails = [];
 
         foreach ($request->input('menu_id') as $key => $menuId) {
-            Order::create([
+            $orderDetails[] = [
                 'user_id' => $user->id,
                 'order_type' => $request->input('order_type'),
                 'phone_number' => $request->input('phone_number'),
@@ -76,10 +76,48 @@ class OrderController extends Controller
                 'code' => $commonCode,
                 'menu_id' => $menuId,
                 'quantity' => $request->input('quantity')[$key],
-            ]);
+            ];
         }
 
+        // Calculate total price for each order and create orders
+        $totalPrices = [];
+
+        foreach ($orderDetails as $orderDetail) {
+            $order = Order::create($orderDetail);
+            $subtotal = $order->menu->price * $order->quantity;
+            $totalPrices[] = $subtotal;
+        }
+
+        // Calculate the overall total price
+        $totalPrice = array_sum($totalPrices);
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = config('midtrans.isProduction');
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = config('midtrans.isSanitized');
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = config('midtrans.is3ds');
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => $commonCode,
+                'gross_amount' => $totalPrice,
+            ],
+            'customer_details' => [
+                'first_name' => $user->name,
+                'email' => $user->email,
+            ],
+        ];
+
+        $snapToken = Snap::getSnapToken($params);
+
+        // Update snapToken for each order
+        Order::where('code', $commonCode)->update(['snapToken' => $snapToken]);
+
         $dataTableNumber = TableNumber::where('number', $request->table_number)->first();
+
         if ($dataTableNumber) {
             $dataTableNumber->update(['status' => 'Full']);
         }
@@ -91,6 +129,7 @@ class OrderController extends Controller
             'success' => 'Order has been placed',
         ]);
     }
+
 
 
 
@@ -115,38 +154,7 @@ class OrderController extends Controller
             return abort(404);
         }
 
-        $totalPrice = 0;
 
-        foreach ($order as $dataOrder) {
-            $subtotal = $dataOrder->menu->price * $dataOrder->quantity;
-            $totalPrice += $subtotal;
-        }
-
-        // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
-        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = false;
-        // Set sanitization on (default)
-        \Midtrans\Config::$isSanitized = true;
-        // Set 3DS transaction for credit card to true
-        \Midtrans\Config::$is3ds = true;
-
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => $dataOrder->code,
-                'gross_amount' => $totalPrice,
-            ),
-            'customer_details' => array(
-                'first_name' => Auth::user()->name,
-                'email' => Auth::user()->email,
-            ),
-        );
-
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
-
-        foreach ($order as $dataOrder) {
-            $dataOrder->update(['snapToken' => $snapToken]);
-        }
 
         // Kirim data pesanan ke view detail
         return view('pages.app.orders_show_pelanggan', [

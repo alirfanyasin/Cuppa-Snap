@@ -53,6 +53,20 @@ main {
   color: #532D1B;
 }
 
+.nav-link:hover {
+  border-bottom: 2px solid white ;
+}
+
+
+.btn-shop {
+  background-color: #532D1B;
+  color: #ffffff;
+}
+
+.btn-shop:hover {
+  background-color: white;
+  color: #532D1B;
+}
 
 .img-about {
   border-radius: 20px;

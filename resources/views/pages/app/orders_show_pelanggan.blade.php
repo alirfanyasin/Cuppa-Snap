@@ -343,7 +343,6 @@
       var payButton = document.getElementById('pay-button');
       payButton.addEventListener('click', function() {
 
-
         // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token.
         // Also, use the embedId that you defined in the div above, here.
         window.snap.pay('{{ $dataBuyer->snapToken }}', {

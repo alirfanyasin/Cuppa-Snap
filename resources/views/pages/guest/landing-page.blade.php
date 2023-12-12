@@ -4,11 +4,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Cuppa Snap</title>
+
+  {{-- Metadata --}}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@cuppasnap" />
+  <meta name="description"
+    content="Cuppa Snap merupakan sebuah tempat pembelian kopi dan makanan secara online dan on-site">
+  <meta name="keywords" content="Kopi, Beli Kopi, Cafe, Coffee, Coffee Shop, Cuppa Snap">
+  <meta name="author" content="Irfan Yasin" />
+  <meta property="og:type" content="article">
+
+  <meta property="og:title" content="Belanja kopi pilihan asli | Cuppa Snap">
+  <meta property="og:site_name" content="Cuppa Snap">
+  <meta property="og:url" content="https://buildwithangga.com/">
+  <meta property="og:description"
+    content="Cuppa Snap merupakan sebuah tempat pembelian kopi dan makanan secara online dan on-site">
+
+  <link rel="icon" href="/assets/img/logo.ico" type="image/x-icon">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('assets/css/landing.css') }}">
-  {{-- <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}"> --}}
 </head>
 
 <body>
@@ -26,9 +44,9 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="ms-auto"></div>
           <div class="navbar-nav me-0">
-            <a class="nav-link me-4 active" href="#">Home</a>
-            <a class="nav-link me-4" href="#">About</a>
-            <a class="nav-link me-4" href="#">Product</a>
+            <a class="nav-link me-4 active" href="#hero">Home</a>
+            <a class="nav-link me-4" href="#about">About</a>
+            <a class="nav-link me-4" href="#product">Product</a>
             <a class="nav-link px-4 py-2 text-white rounded-pill"href="{{ route('login') }}"
               style="background-color: #532D1B">Login</a>
           </div>
@@ -48,9 +66,13 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio inventore fuga
               nulla a aliquam eveniet
               voluptatum possimus nisi doloremque debitis?</p>
-            <div class="my-5">
-              <a href="{{ route('login') }}" class="text-white text-decoration-none px-5 py-3 rounded-pill"
-                style="background-color: #532D1B;">Shop Now</a>
+            <div class="my-5 ">
+              <a href="{{ route('login') }}"
+                class="fw-semibold text-decoration-none px-5 d-inline-block py-3 rounded-pill btn-shop">
+                <div class="d-flex align-items-center">
+                  <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon>&nbsp;&nbsp; <span>Shop Now</span>
+                </div>
+              </a>
             </div>
 
             <div class="d-flex">
@@ -135,16 +157,13 @@
                     <span style="color: #532D1B;">245 Terjual</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
-                    <form action="" method="POST" class="d-inline">
-                      @csrf
-                      <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                        style="padding: 10px 10px; background-color: #532D1B;"><span
-                          class="d-flex justify-content-center align-items-center ">
-                          <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                          cart
-                        </span></button>
-                    </form>
-
+                    <a href="{{ route('login') }}" type="submit"
+                      class="text-white text-decoration-none border-0 d-inline-block rounded-3"
+                      style="padding: 10px 10px; background-color: #532D1B;"><span
+                        class="d-flex justify-content-center align-items-center ">
+                        <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                        cart
+                      </span></a>
                     <div>
                       <iconify-icon icon="solar:star-bold" width="20px" class="rating"></iconify-icon>
                       <iconify-icon icon="solar:star-bold" width="20px" class="rating"></iconify-icon>
@@ -179,15 +198,14 @@
                     <span style="color: #532D1B;">245 Terjual</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
-                    <form action="" method="POST" class="d-inline">
-                      @csrf
-                      <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                        style="padding: 10px 10px; background-color: #532D1B;"><span
-                          class="d-flex justify-content-center align-items-center ">
-                          <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                          cart
-                        </span></button>
-                    </form>
+
+                    <a href="{{ route('login') }}" type="submit"
+                      class="text-white text-decoration-none border-0 d-inline-block rounded-3"
+                      style="padding: 10px 10px; background-color: #532D1B;"><span
+                        class="d-flex justify-content-center align-items-center ">
+                        <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                        cart
+                      </span></a>
 
                     <div>
                       <iconify-icon icon="solar:star-bold" width="20px" class="rating"></iconify-icon>
@@ -223,16 +241,13 @@
                     <span style="color: #532D1B;">245 Terjual</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
-                    <form action="" method="POST" class="d-inline">
-                      @csrf
-                      <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                        style="padding: 10px 10px; background-color: #532D1B;"><span
-                          class="d-flex justify-content-center align-items-center ">
-                          <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                          cart
-                        </span></button>
-                    </form>
-
+                    <a href="{{ route('login') }}" type="submit"
+                      class="text-white text-decoration-none border-0 d-inline-block rounded-3"
+                      style="padding: 10px 10px; background-color: #532D1B;"><span
+                        class="d-flex justify-content-center align-items-center ">
+                        <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                        cart
+                      </span></a>
                     <div>
                       <iconify-icon icon="solar:star-bold" width="20px" class="rating"></iconify-icon>
                       <iconify-icon icon="solar:star-bold" width="20px" class="rating"></iconify-icon>
@@ -267,15 +282,13 @@
                     <span style="color: #532D1B;">245 Terjual</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
-                    <form action="" method="POST" class="d-inline">
-                      @csrf
-                      <button type="submit" class="text-white border-0 d-inline-block rounded-3"
-                        style="padding: 10px 10px; background-color: #532D1B;"><span
-                          class="d-flex justify-content-center align-items-center ">
-                          <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
-                          cart
-                        </span></button>
-                    </form>
+                    <a href="{{ route('login') }}" type="submit"
+                      class="text-white text-decoration-none border-0 d-inline-block rounded-3"
+                      style="padding: 10px 10px; background-color: #532D1B;"><span
+                        class="d-flex justify-content-center align-items-center ">
+                        <iconify-icon icon="tdesign:cart" width="25px"></iconify-icon> &nbsp;&nbsp; Add to
+                        cart
+                      </span></a>
 
                     <div>
                       <iconify-icon icon="solar:star-bold" width="20px" class="rating"></iconify-icon>
@@ -307,11 +320,11 @@
           <div class="col-md-2">
             <div class="fs-5 fw-semibold">Quick Link</div>
             <div>
-              <a href="" class="fw-light d-block text-decoration-none text-white">Home</a>
-              <a href="" class="fw-light d-block text-decoration-none text-white">About</a>
-              <a href="" class="fw-light d-block text-decoration-none text-white">Product</a>
-              <a href="" class="fw-light d-block text-decoration-none text-white">Login</a>
-              <a href="" class="fw-light d-block text-decoration-none text-white">Register</a>
+              <a href="#hero" class="fw-light d-block text-decoration-none text-white">Home</a>
+              <a href="#about" class="fw-light d-block text-decoration-none text-white">About</a>
+              <a href="#product" class="fw-light d-block text-decoration-none text-white">Product</a>
+              <a href="{{ route('login') }}" class="fw-light d-block text-decoration-none text-white">Login</a>
+              <a href="{{ route('register') }}" class="fw-light d-block text-decoration-none text-white">Register</a>
             </div>
           </div>
           <div class="col-md-2">

@@ -14,6 +14,26 @@
 
 
   <title>Cuppa Snap - @yield('title')</title>
+
+
+  {{-- Metadata --}}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@cuppasnap" />
+  <meta name="description"
+    content="Cuppa Snap merupakan sebuah tempat pembelian kopi dan makanan secara online dan on-site">
+  <meta name="keywords" content="Kopi, Beli Kopi, Cafe, Coffee, Coffee Shop, Cuppa Snap">
+  <meta name="author" content="Irfan Yasin" />
+  <meta property="og:type" content="article">
+
+  <meta property="og:title" content="Belanja kopi pilihan asli | Cuppa Snap">
+  <meta property="og:site_name" content="Cuppa Snap">
+  <meta property="og:url" content="https://buildwithangga.com/">
+  <meta property="og:description"
+    content="Cuppa Snap merupakan sebuah tempat pembelian kopi dan makanan secara online dan on-site">
+
+  <link rel="icon" href="/assets/img/logo.ico" type="image/x-icon">
+
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
