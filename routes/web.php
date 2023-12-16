@@ -11,6 +11,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\MenuController as UserMenuController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
+use App\Http\Controllers\User\TransactionController as UserTransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -84,4 +85,6 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::put('orders/{code}/confirmed', [UserOrderController::class, 'confirmed'])->name('orders.confirmed');
     Route::put('orders/{code}/canceled', [UserOrderController::class, 'canceled'])->name('orders.canceled');
     Route::delete('orders/{code}/destroy', [UserOrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('transactions', [UserTransactionController::class, 'index'])->name('transactions');
+    Route::get('transactions/{code}/show', [UserTransactionController::class, 'show'])->name('transactions.show');
 });

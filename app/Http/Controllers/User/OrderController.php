@@ -7,12 +7,14 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\TableNumber;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Midtrans\Snap;
 use PSpell\Config;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -86,6 +88,7 @@ class OrderController extends Controller
             $order = Order::create($orderDetail);
             $subtotal = $order->menu->price * $order->quantity;
             $totalPrices[] = $subtotal;
+            Transaction::create($orderDetail);
         }
 
         // Calculate the overall total price
@@ -183,13 +186,11 @@ class OrderController extends Controller
 
     public function canceled($code)
     {
-        $orders = Order::where('code', $code)->get();
 
-        foreach ($orders as $order) {
-            $order->update(['status' => 'Canceled']);
-        }
+        Order::where('code', $code)->update(['status' => 'Canceled']);
+        Transaction::where('code', $code)->update(['status' => 'Canceled']);
 
-        return redirect()->route('orders')->with('success', 'Rejected orders successfully');
+        return redirect()->route('orders')->with('success', 'Canceled orders successfully');
     }
 
     /**

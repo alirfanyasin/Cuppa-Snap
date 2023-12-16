@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained();
-            // $table->foreignId('user_id')->constrained();
-            // $table->foreignId('menu_id')->constrained();
-            // $table->foreignId('cart_id')->constrained();
-            // $table->unsignedBigInteger('total')->nullable();
-            // $table->string('code')->nullable();
-            // $table->string('status')->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('menu_id')->constrained();
+            $table->unsignedBigInteger('table_id')->nullable();
+            $table->unsignedInteger('quantity');
+            $table->string('order_type');
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('status')->default('Pending')->nullable();
+            $table->string('code')->nullable();
+            $table->string('snapToken')->nullable();
             $table->timestamps();
         });
     }

@@ -57,6 +57,13 @@
               width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Orders</span></div>
         </a>
       </li>
+      <li class="mb-2">
+        <a href="{{ route('transactions') }}"
+          class="d-inline-block text-decoration-none text-white {{ Request::is('transactions') ? 'active' : '' }}{{ Request::is('transactions/*') ? 'active' : '' }}">
+          <div class="d-flex align-items-center"><iconify-icon icon="uil:transaction"
+              width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Transactions</span></div>
+        </a>
+      </li>
     </ul>
   @endrole
   <div class="position-absolute bottom-0">
