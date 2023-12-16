@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Charts\MonthlyUsersChart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,11 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MonthlyUsersChart $chart)
     {
-        return view('pages.app.dashboard_pelanggan');
+        return view('pages.app.dashboard_pelanggan', [
+            'chart' => $chart->build()
+        ]);
     }
 
     /**
