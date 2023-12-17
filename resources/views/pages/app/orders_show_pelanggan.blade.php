@@ -129,6 +129,14 @@
                                     <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                   </span>
                                 </a>
+                                <button type="button" class="text-white border-0 d-inline-block rounded-3"
+                                  style="padding: 6px 6px; background-color: rgba(255, 255, 255, 0.2);"
+                                  data-bs-toggle="modal" data-bs-target="#ratingsModal{{ $item->code }}"
+                                  data-code="{{ $item->code }}">
+                                  <span class="d-flex justify-content-center align-items-center">
+                                    <iconify-icon icon="ph:star" width="25px"></iconify-icon>
+                                  </span>
+                                </button>
                                 <form action="{{ route('orders.destroy', $item->code) }}" method="POST"
                                   class="d-inline">
                                   @csrf
@@ -245,6 +253,17 @@
                       <td>{{ $dataBuyer->table_id }}</td>
                     </tr>
                     <tr>
+                      <td>Payment Status</td>
+                      <td>:</td>
+                      <td>
+                        @if ($dataBuyer->status == 'Process' || $dataBuyer->status == 'Done')
+                          <span class="badge text-bg-success">Success</span>
+                        @else
+                          <span class="badge text-bg-info">Waiting</span>
+                        @endif
+                      </td>
+                    </tr>
+                    <tr>
                       <td>Status</td>
                       <td>:</td>
                       <td><span
@@ -302,6 +321,94 @@
     </div>
   @endrole
 
+  <!-- Ratings Modals -->
+  @foreach ($data as $item)
+    @if ($item->user_id == Auth::user()->id && $item->status == 'Done')
+      <div class="modal fade" id="ratingsModal{{ $item->code }}" tabindex="-1" aria-labelledby="ratingsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-white" id="ratingsModalLabel">Ratings</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('rating.post') }}" id="ratingForm" method="POST">
+              @csrf
+              <div class="modal-body">
+                <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                <input type="hidden" name="menu_id" value="{{ $item->menu->id }}">
+                <input type="hidden" name="rating" id="selectedRating" value="">
+                <div class="d-flex justify-content-evenly">
+                  @for ($i = 1; $i <= 5; $i++)
+                    <span class="star" data-value="{{ $i }}"><iconify-icon icon="solar:star-line-duotone"
+                        width="40px" class="text-warning"></iconify-icon></span>
+                  @endfor
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit"
+                  class="border-0 rounded-3 text-white d-flex justify-content-center align-items-center"
+                  style="padding: 10px 30px;background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15.5px);-webkit-backdrop-filter: blur(15.5px);">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    @endif
+  @endforeach
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const stars = document.querySelectorAll('.star');
+      const selectedRating = document.getElementById('selectedRating');
+
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          const ratingValue = this.getAttribute('data-value');
+          resetStars();
+          highlightStars(ratingValue);
+          selectedRating.value = ratingValue;
+        });
+      });
+
+      function resetStars() {
+        stars.forEach(star => {
+          // Clear existing content
+          while (star.firstChild) {
+            star.removeChild(star.firstChild);
+          }
+
+          // Add default star icon
+          const icon = document.createElement('iconify-icon');
+          icon.setAttribute('icon', 'solar:star-line-duotone');
+          icon.setAttribute('width', '40px');
+          icon.classList.add('text-warning');
+          star.appendChild(icon);
+        });
+      }
+
+      function highlightStars(value) {
+        for (let i = 0; i < value; i++) {
+          // Clear existing content
+          while (stars[i].firstChild) {
+            stars[i].removeChild(stars[i].firstChild);
+          }
+
+          // Add bold star icon
+          const icon = document.createElement('iconify-icon');
+          icon.setAttribute('icon', 'solar:star-bold');
+          icon.setAttribute('width', '40px');
+          icon.classList.add('text-warning');
+          stars[i].appendChild(icon);
+        }
+      }
+    });
+  </script>
+
   <style>
     .table {
       --bs-table-bg: none;
@@ -325,6 +432,15 @@
     #table-custom td,
     #table-custom th {
       white-space: normal;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(15.5px);
+      -webkit-backdrop-filter: blur(15.5px);
+      border-radius: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.50);
     }
   </style>
 

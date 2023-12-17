@@ -20,6 +20,7 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
+                  <th scope="col">Name</th>
                   <th scope="col">Code</th>
                   <th scope="col">Payment Method</th>
                   <th scope="col">Date</th>
@@ -33,25 +34,24 @@
                 @endphp
 
                 @foreach ($data as $item)
-                  @if ($item->user_id == Auth::user()->id)
-                    <tr>
-                      <th scope="row">{{ $no++ }}</th>
-                      <td>{{ $item->code }}</td>
-                      <td>{{ $item->payment_method }}</td>
-                      <td>{{ $item->created_at->diffForHumans() }}</td>
-                      <td><span
-                          class="badge {{ $item->status == 'Done' ? 'text-bg-success' : '' }}{{ $item->status == 'Canceled' ? 'text-bg-danger' : '' }}{{ $item->status == 'Rejected' ? 'text-bg-danger' : '' }}">{{ $item->status }}</span>
-                      <td>
-                        <a href="{{ route('transactions.show', ['code' => $item->code, 'id' => $item->id]) }}"
-                          class="text-white text-decoration-none d-inline-block rounded-3"
-                          style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
-                          <span class="d-flex justify-content-center align-items-center ">
-                            <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
-                          </span>
-                        </a>
-                      </td>
-                    </tr>
-                  @endif
+                  <tr>
+                    <th scope="row">{{ $no++ }}</th>
+                    <td>{{ $item->user->name }}</td>
+                    <td>{{ $item->code }}</td>
+                    <td>{{ $item->payment_method }}</td>
+                    <td>{{ $item->created_at->diffForHumans() }}</td>
+                    <td><span
+                        class="badge {{ $item->status == 'Done' ? 'text-bg-success' : '' }}{{ $item->status == 'Canceled' ? 'text-bg-danger' : '' }}{{ $item->status == 'Rejected' ? 'text-bg-danger' : '' }}">{{ $item->status }}</span>
+                    <td>
+                      <a href="{{ route('app.transactions.show', ['code' => $item->code, 'id' => $item->id]) }}"
+                        class="text-white text-decoration-none d-inline-block rounded-3"
+                        style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                        <span class="d-flex justify-content-center align-items-center ">
+                          <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
                 @endforeach
               </tbody>
             </table>

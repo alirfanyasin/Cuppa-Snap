@@ -32,6 +32,13 @@
               width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Table Number</span></div>
         </a>
       </li>
+      <li class="mb-2">
+        <a href="{{ route('app.transactions') }}"
+          class="d-inline-block text-decoration-none text-white {{ Request::is('app/transactions') ? 'active' : '' }}{{ Request::is('app/transactions/*') ? 'active' : '' }}">
+          <div class="d-flex align-items-center"><iconify-icon icon="uil:transaction"
+              width="30px"></iconify-icon>&nbsp;&nbsp;&nbsp;<span class="fs-5">Transactions</span></div>
+        </a>
+      </li>
     </ul>
   @endrole
   @role('pelanggan')

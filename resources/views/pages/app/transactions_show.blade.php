@@ -11,7 +11,7 @@
     </nav>
   </header>
 
-  @role('pelanggan')
+  @role('kasir')
     <div class="container mt-4 responsive-content">
       <div class="row">
         <div class="col-md-8 mb-3">
@@ -21,6 +21,7 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Code</th>
                     <th scope="col">Date</th>
                     <th scope="col">Status</th>
@@ -32,26 +33,25 @@
                     $no = 1;
                   @endphp
                   @foreach ($data as $item)
-                    @if ($item->user_id == Auth::user()->id)
-                      @if ($item->status == 'Done' || $item->status == 'Canceled' || $item->status == 'Rejected')
-                        <tr>
-                          <th scope="row">{{ $no++ }}</th>
-                          <td>{{ $item->code }}</td>
-                          <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
-                          <td><span
-                              class="badge {{ $item->status == 'Done' ? 'text-bg-success' : '' }} {{ $item->status == 'Rejected' ? 'text-bg-danger' : '' }}{{ $item->status == 'Canceled' ? 'text-bg-danger' : '' }}">{{ $item->status }}</span>
-                          </td>
-                          <td>
-                            <a href="{{ route('transactions.show', ['code' => $item->code, 'id' => $item->id]) }}"
-                              class="text-white text-decoration-none d-inline-block rounded-3"
-                              style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
-                              <span class="d-flex justify-content-center align-items-center ">
-                                <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
-                              </span>
-                            </a>
-                          </td>
-                        </tr>
-                      @endif
+                    @if ($item->status == 'Done' || $item->status == 'Canceled' || $item->status == 'Rejected')
+                      <tr>
+                        <th scope="row">{{ $no++ }}</th>
+                        <td>{{ $item->user->name }}</td>
+                        <td>{{ $item->code }}</td>
+                        <td>{{ $item->created_at->format('d F Y, H:i:s') }}</td>
+                        <td><span
+                            class="badge {{ $item->status == 'Done' ? 'text-bg-success' : '' }} {{ $item->status == 'Rejected' ? 'text-bg-danger' : '' }}{{ $item->status == 'Canceled' ? 'text-bg-danger' : '' }}">{{ $item->status }}</span>
+                        </td>
+                        <td>
+                          <a href="{{ route('app.transactions.show', ['code' => $item->code, 'id' => $item->id]) }}"
+                            class="text-white text-decoration-none d-inline-block rounded-3"
+                            style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                            <span class="d-flex justify-content-center align-items-center ">
+                              <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
+                            </span>
+                          </a>
+                        </td>
+                      </tr>
                     @endif
                   @endforeach
                 </tbody>

@@ -35,7 +35,7 @@
               <div class="position-absolute w-100 px-3" style="bottom: 15px; left: 0; right: 0;">
                 <div class="d-flex justify-content-between align-items-center">
                   <span class="fs-5">Rp. {{ number_format($item->price, 0, ',', '.') }}</span>
-                  <span>245 Terjual</span>
+                  <span>{{ $totalSold[$item->id] ?? 0 }} Sold</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3">
                   @role('pelanggan')

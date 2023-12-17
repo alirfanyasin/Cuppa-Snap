@@ -16,9 +16,9 @@
   <meta name="author" content="Irfan Yasin" />
   <meta property="og:type" content="article">
 
-  <meta property="og:title" content="Belanja kopi pilihan asli | Cuppa Snap">
+  <meta property="og:title" content="Cuppa Snap | Belanja kopi pilihan asli">
   <meta property="og:site_name" content="Cuppa Snap">
-  <meta property="og:url" content="https://buildwithangga.com/">
+  <meta property="og:url" content="https://cuppasnap.didimoforus.com/">
   <meta property="og:description"
     content="Cuppa Snap merupakan sebuah tempat pembelian kopi dan makanan secara online dan on-site">
 
@@ -63,7 +63,7 @@
               Essence
               of Good
               Mornings.</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio inventore fuga
+            <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio inventore fuga
               nulla a aliquam eveniet
               voluptatum possimus nisi doloremque debitis?</p>
             <div class="d-flex icon-menu-parent">

@@ -40,4 +40,14 @@ class Menu extends Model
     {
         return $this->hasMany(Transaction::class, 'menu_id');
     }
+
+    /**
+     * Get all of the rating for the Menu
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rating(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'menu_id');
+    }
 }

@@ -173,11 +173,16 @@ class OrderController extends Controller
     public function confirmed($code)
     {
 
-        $orders = Order::where('code', $code)->get();
 
-        foreach ($orders as $order) {
-            $order->update(['status' => 'Done']);
-        }
+        Order::where('code', $code)->update(['status' => 'Done']);
+        Transaction::where('code', $code)->update(['status' => 'Done']);
+
+
+        // $orders = Order::where('code', $code)->get();
+
+        // foreach ($orders as $order) {
+        //     $order->update(['status' => 'Done']);
+        // }
         return redirect()->route('orders')->with('success', 'Confirmed orders successfully');
     }
 
