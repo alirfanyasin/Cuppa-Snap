@@ -8,7 +8,7 @@
 
 
 body {
-  background-image: url('../img/bg-landing.jpg');
+  background-image: url('../img/bg-landing-1.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -44,12 +44,21 @@ main {
   -webkit-backdrop-filter: blur( 15.5px );
 }
 
+/* .nav-link {
+  color: #ffffff;
+} */
+
 .nav-link {
   color: #532D1B;
 }
 
-.nav-link.active {
+/* .nav-link.active {
   border-bottom: 2px solid white ;
+  color: #fff;
+} */
+
+.navbar-nav .nav-link.active {
+  border-bottom: 2px solid #532D1B ;
   color: #532D1B;
 }
 
@@ -59,6 +68,10 @@ main {
 
 .tagline {
   font-size: 40pt;
+}
+
+.tagline span {
+  color: #532D1B;
 }
 
 .btn-shop {

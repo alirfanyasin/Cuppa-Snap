@@ -332,10 +332,13 @@
               <h1 class="modal-title fs-5 text-white" id="ratingsModalLabel">Ratings</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" id="ratingForm" method="POST">
+            <form action="{{ route('rating.post') }}" id="ratingForm" method="POST">
+              @csrf
               <div class="modal-body">
+                <input type="hidden" name="user_id" value="{{ $item->user->id }}">
+                <input type="hidden" name="menu_id" value="{{ $item->menu->id }}">
                 <input type="hidden" name="rating" id="selectedRating" value="">
-                <div class="d-flex justify-content-around">
+                <div class="d-flex justify-content-evenly">
                   @for ($i = 1; $i <= 5; $i++)
                     <span class="star" data-value="{{ $i }}"><iconify-icon icon="solar:star-line-duotone"
                         width="40px" class="text-warning"></iconify-icon></span>

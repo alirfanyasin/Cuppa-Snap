@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\MenuController as UserMenuController;
@@ -90,4 +91,5 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::delete('orders/{code}/destroy', [UserOrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('transactions', [UserTransactionController::class, 'index'])->name('transactions');
     Route::get('transactions/{code}/show', [UserTransactionController::class, 'show'])->name('transactions.show');
+    Route::post('rating/store', [RatingController::class, 'store'])->name('rating.post');
 });
