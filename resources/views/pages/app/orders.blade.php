@@ -94,16 +94,6 @@
                                       </span></button>
                                   </form>
                                 @endif
-
-                                {{-- @if ($item->status == 'Pending' && $item->payment_method == 'Transfer')
-                                  <button type="button" id="pay-button"
-                                    class="border-0 text-white text-decoration-none d-inline-block rounded-3"
-                                    style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
-                                    <span class="d-flex justify-content-center align-items-center ">
-                                      <iconify-icon icon="tdesign:money" width="25px"></iconify-icon>
-                                    </span>
-                                  </button>
-                                @endif --}}
                               </td>
                             </tr>
                           @endif
@@ -113,6 +103,7 @@
                   </table>
                 </div>
               </div>
+
               <div class="tab-pane fade" id="nav-done" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
                 <div class="table-responsive">
                   <table class="table align-middle">
@@ -147,6 +138,15 @@
                                     <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                   </span>
                                 </a>
+                                <button type="button" class="text-white border-0 d-inline-block rounded-3"
+                                  style="padding: 6px 6px; background-color: rgba(255, 255, 255, 0.2);"
+                                  data-bs-toggle="modal" data-bs-target="#ratingsModal{{ $item->code }}"
+                                  data-code="{{ $item->code }}">
+                                  <span class="d-flex justify-content-center align-items-center">
+                                    <iconify-icon icon="ph:star" width="25px"></iconify-icon>
+                                  </span>
+                                </button>
+
                                 <form action="{{ route('orders.destroy', $item->code) }}" method="POST"
                                   class="d-inline">
                                   @csrf
@@ -165,8 +165,8 @@
                     </tbody>
                   </table>
                 </div>
-
               </div>
+
               <div class="tab-pane fade" id="nav-canceled" role="tabpanel" aria-labelledby="nav-contact-tab"
                 tabindex="0">
                 <div class="table-responsive">
@@ -222,12 +222,13 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   @endrole
+
+
 
   @role('kasir')
     <div class="container mt-4 responsive-content">
@@ -252,7 +253,7 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Orderer</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -316,7 +317,7 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Orderer</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -370,7 +371,7 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Orderer</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -424,6 +425,90 @@
     </div>
   @endrole
 
+  <!-- Ratings Modals -->
+  @foreach ($data as $item)
+    @if ($item->user_id == Auth::user()->id && $item->status == 'Done')
+      <div class="modal fade" id="ratingsModal{{ $item->code }}" tabindex="-1" aria-labelledby="ratingsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-white" id="ratingsModalLabel">Ratings</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" id="ratingForm" method="POST">
+              <div class="modal-body">
+                <input type="hidden" name="rating" id="selectedRating" value="">
+                <div class="d-flex justify-content-around">
+                  @for ($i = 1; $i <= 5; $i++)
+                    <span class="star" data-value="{{ $i }}"><iconify-icon icon="solar:star-line-duotone"
+                        width="40px" class="text-warning"></iconify-icon></span>
+                  @endfor
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit"
+                  class="border-0 rounded-3 text-white d-flex justify-content-center align-items-center"
+                  style="padding: 10px 30px;background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15.5px);-webkit-backdrop-filter: blur(15.5px);">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    @endif
+  @endforeach
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const stars = document.querySelectorAll('.star');
+      const selectedRating = document.getElementById('selectedRating');
+
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          const ratingValue = this.getAttribute('data-value');
+          resetStars();
+          highlightStars(ratingValue);
+          selectedRating.value = ratingValue;
+        });
+      });
+
+      function resetStars() {
+        stars.forEach(star => {
+          // Clear existing content
+          while (star.firstChild) {
+            star.removeChild(star.firstChild);
+          }
+
+          // Add default star icon
+          const icon = document.createElement('iconify-icon');
+          icon.setAttribute('icon', 'solar:star-line-duotone');
+          icon.setAttribute('width', '40px');
+          icon.classList.add('text-warning');
+          star.appendChild(icon);
+        });
+      }
+
+      function highlightStars(value) {
+        for (let i = 0; i < value; i++) {
+          // Clear existing content
+          while (stars[i].firstChild) {
+            stars[i].removeChild(stars[i].firstChild);
+          }
+
+          // Add bold star icon
+          const icon = document.createElement('iconify-icon');
+          icon.setAttribute('icon', 'solar:star-bold');
+          icon.setAttribute('width', '40px');
+          icon.classList.add('text-warning');
+          stars[i].appendChild(icon);
+        }
+      }
+    });
+  </script>
   <style>
     .table {
       --bs-table-bg: none;
@@ -442,6 +527,15 @@
     .table td,
     .table th {
       white-space: nowrap;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(15.5px);
+      -webkit-backdrop-filter: blur(15.5px);
+      border-radius: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.50);
     }
   </style>
 @endsection

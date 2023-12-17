@@ -145,7 +145,7 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Orderer</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
@@ -235,10 +235,10 @@
                       <td>Payment Status</td>
                       <td>:</td>
                       <td>
-                        @if ($dataBuyer->status == 'Process')
+                        @if ($dataBuyer->status == 'Process' || $dataBuyer->status == 'Done')
                           <span class="badge text-bg-success">Success</span>
                         @else
-                          <span class="badge text-bg-info">Waiting for payment</span>
+                          <span class="badge text-bg-info">Waiting</span>
                         @endif
                       </td>
                     </tr>

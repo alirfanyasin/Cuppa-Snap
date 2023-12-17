@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\TableNumberController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -68,6 +69,8 @@ Route::middleware(['auth', 'role:kasir'])->group(function () {
     Route::post('app/table-number/store', [TableNumberController::class, 'store'])->name('app.table_number.store');
     Route::post('app/table-number/{id}/update', [TableNumberController::class, 'update'])->name('app.table_number.update');
     Route::post('app/table-number/{id}/destroy', [TableNumberController::class, 'destroy'])->name('app.table_number.destroy');
+    Route::get('app/transactions', [TransactionController::class, 'index'])->name('app.transactions');
+    Route::get('app/transactions/{code}/show', [TransactionController::class, 'show'])->name('app.transactions.show');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {

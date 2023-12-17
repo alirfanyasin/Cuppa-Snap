@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,8 +16,16 @@ class MenuController extends Controller
      */
     public function index()
     {
+        $menus = Menu::where('status', 'Available')->get();
+
+        $totalSold = [];
+
+        foreach ($menus as $menu) {
+            $totalSold[$menu->id] = Transaction::where(['menu_id' => $menu->id, 'status' => 'Done'])->sum('quantity');
+        }
         return view('pages.app.menu', [
-            'data' => Menu::all()
+            'data' => Menu::all(),
+            'totalSold' => $totalSold,
         ]);
     }
 

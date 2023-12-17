@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -13,8 +14,16 @@ class MenuController extends Controller
      */
     public function index()
     {
+        $menus = Menu::where('status', 'Available')->get();
+
+        $totalSold = [];
+
+        foreach ($menus as $menu) {
+            $totalSold[$menu->id] = Transaction::where(['menu_id' => $menu->id, 'status' => 'Done'])->sum('quantity');
+        }
         return view('pages.app.menu', [
-            'data' => Menu::where('status', 'Available')->get()
+            'data' => Menu::where('status', 'Available')->get(),
+            'totalSold' => $totalSold,
         ]);
     }
 
