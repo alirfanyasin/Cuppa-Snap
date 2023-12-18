@@ -56,6 +56,7 @@
                   @foreach ($menu as $item)
                     <input type="hidden" name="user_id[]" value="{{ $item->user->id }}">
                     <input type="hidden" name="menu_id[]" value="{{ $item->menu->id }}">
+                    <input type="hidden" name="code[]" value="{{ $item->code }}">
                   @endforeach
 
                   <div class="d-flex justify-content-evenly">
@@ -64,7 +65,6 @@
                           width="40px" class="text-warning"></iconify-icon></span>
                     @endfor
                   </div>
-
                   <input type="hidden" name="ratings" id="selectedRating" value="">
 
                   <button type="submit"
