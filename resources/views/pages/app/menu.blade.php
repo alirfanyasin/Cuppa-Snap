@@ -71,13 +71,30 @@
                       </form>
                     </div>
                   @endrole
+
                   <div>
-                    <iconify-icon icon="solar:star-bold" width="20px" class="text-warning"></iconify-icon>
-                    <iconify-icon icon="solar:star-bold" width="20px" class="text-warning"></iconify-icon>
-                    <iconify-icon icon="solar:star-bold" width="20px" class="text-warning"></iconify-icon>
-                    <iconify-icon icon="solar:star-line-duotone" width="20px" class="text-warning"></iconify-icon>
-                    <iconify-icon icon="solar:star-line-duotone" width="20px" class="text-warning"></iconify-icon>
+                    @if (isset($averageRatings[$item->id]))
+                      @php
+                        $roundedRating = round($averageRatings[$item->id]);
+                      @endphp
+
+                      @for ($i = 1; $i <= 5; $i++)
+                        <iconify-icon icon="{{ $i <= $roundedRating ? 'solar:star-bold' : 'solar:star-line-duotone' }}"
+                          width="20px" class="text-warning"></iconify-icon>
+                      @endfor
+                    @else
+                      @for ($i = 1; $i <= 5; $i++)
+                        <iconify-icon icon="solar:star-line-duotone" width="20px" class="text-warning"></iconify-icon>
+                      @endfor
+                    @endif
                   </div>
+                  {{-- <div>
+                    <iconify-icon icon="solar:star-bold" width="20px" class="text-warning"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" width="20px" class="text-warning"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" width="20px" class="text-warning"></iconify-icon>
+                    <iconify-icon icon="solar:star-line-duotone" width="20px" class="text-warning"></iconify-icon>
+                    <iconify-icon icon="solar:star-line-duotone" width="20px" class="text-warning"></iconify-icon>
+                  </div> --}}
                 </div>
               </div>
             </div>

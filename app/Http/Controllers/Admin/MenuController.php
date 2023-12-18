@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Rating;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,16 +20,19 @@ class MenuController extends Controller
         $menus = Menu::where('status', 'Available')->get();
 
         $totalSold = [];
+        $averageRatings = [];
 
         foreach ($menus as $menu) {
             $totalSold[$menu->id] = Transaction::where(['menu_id' => $menu->id, 'status' => 'Done'])->sum('quantity');
+            $averageRatings[$menu->id] = Rating::where('menu_id', $menu->id)->avg('rating');
         }
+
         return view('pages.app.menu', [
             'data' => Menu::all(),
             'totalSold' => $totalSold,
+            'averageRatings' => $averageRatings,
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */

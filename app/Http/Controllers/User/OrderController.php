@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Rating;
 use App\Models\TableNumber;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -34,8 +35,11 @@ class OrderController extends Controller
             return $item;
         });
 
+        $isRating = Rating::all()->pluck('code');
+
         return view('pages.app.orders', [
             'data' => $filterData,
+            'isRating' => $isRating
         ]);
     }
 
