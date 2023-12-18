@@ -15,7 +15,7 @@
     <div class="container mt-4 responsive-content">
       <div class="row">
         <div class="col-md-8 mb-3">
-          <div class="bg-glass text-center text-white p-4">
+          <div class="bg-glass text-center text-white p-4 overflow-auto" style="height: 550px">
             <div class="table-responsive">
               <table class="table align-middle">
                 <thead>
@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="col-md-4 mb-3">
-          <div class="bg-glass text-white p-4 overflow-auto" style="height: 500px">
+          <div class="bg-glass text-white p-4 overflow-auto" style="height: 550px">
             <header>
               <h5>Detail</h5>
             </header>
