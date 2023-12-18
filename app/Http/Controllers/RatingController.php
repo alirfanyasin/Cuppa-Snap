@@ -24,11 +24,13 @@ class RatingController extends Controller
             'user_id.*' => 'required',
             'menu_id.*' => 'required',
             'ratings' => 'required',
+            'code.*' => 'required',
         ]);
 
         $userIds = $validated['user_id'];
         $menuIds = $validated['menu_id'];
         $ratings = $validated['ratings'];
+        $code = $validated['code'];
 
         $count = count($userIds);
 
@@ -38,6 +40,7 @@ class RatingController extends Controller
                 'user_id' => $userIds[$i],
                 'menu_id' => $menuIds[$i],
                 'rating' => $ratings,
+                'code' => $code[$i],
             ]);
         }
 
