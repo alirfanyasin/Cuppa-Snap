@@ -91,5 +91,6 @@ Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::delete('orders/{code}/destroy', [UserOrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('transactions', [UserTransactionController::class, 'index'])->name('transactions');
     Route::get('transactions/{code}/show', [UserTransactionController::class, 'show'])->name('transactions.show');
+    Route::get('rating/{code}', [RatingController::class, 'index'])->name('rating');
     Route::post('rating/store', [RatingController::class, 'store'])->name('rating.post');
 });

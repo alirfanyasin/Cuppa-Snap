@@ -15,7 +15,7 @@
     <div class="container mt-4 responsive-content">
       <div class="row">
         <div class="col">
-          <div class="bg-glass text-center text-white p-4">
+          <div class="bg-glass text-center text-white p-4 overflow-auto" style="height: 550px">
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-orders-tab" data-bs-toggle="tab" data-bs-target="#nav-orders"
@@ -138,14 +138,21 @@
                                     <iconify-icon icon="ph:eye" width="25px"></iconify-icon>
                                   </span>
                                 </a>
-                                <button type="button" class="text-white border-0 d-inline-block rounded-3"
+                                <a href="{{ route('rating', ['code' => $item->code]) }}"
+                                  class="text-white text-decoration-none d-inline-block rounded-3"
+                                  style="padding: 6px 6px; background-color: rgba( 255, 255, 255, 0.2 );">
+                                  <span class="d-flex justify-content-center align-items-center ">
+                                    <iconify-icon icon="ph:star" width="25px"></iconify-icon>
+                                  </span>
+                                </a>
+                                {{-- <button type="button" class="text-white border-0 d-inline-block rounded-3"
                                   style="padding: 6px 6px; background-color: rgba(255, 255, 255, 0.2);"
                                   data-bs-toggle="modal" data-bs-target="#ratingsModal{{ $item->code }}"
                                   data-code="{{ $item->code }}">
                                   <span class="d-flex justify-content-center align-items-center">
                                     <iconify-icon icon="ph:star" width="25px"></iconify-icon>
                                   </span>
-                                </button>
+                                </button> --}}
 
                                 <form action="{{ route('orders.destroy', $item->code) }}" method="POST"
                                   class="d-inline">
@@ -424,7 +431,7 @@
     </div>
   @endrole
 
-  <!-- Ratings Modals -->
+  {{-- <!-- Ratings Modals -->
   @foreach ($data as $item)
     @if ($item->user_id == Auth::user()->id && $item->status == 'Done')
       <div class="modal fade" id="ratingsModal{{ $item->code }}" tabindex="-1" aria-labelledby="ratingsModalLabel"
@@ -438,11 +445,9 @@
             <form action="{{ route('rating.post') }}" id="ratingForm" method="POST">
               @csrf
               <div class="modal-body">
-                {{-- @foreach ($item->code as $code) --}}
                 <input type="hidden" name="user_id" value="{{ $item->user->id }}">
                 <input type="hidden" name="menu_id" value="{{ $item->menu->id }}">
                 <input type="hidden" name="rating" id="selectedRating" value="">
-                {{-- @endforeach --}}
                 <div class="d-flex justify-content-evenly">
                   @for ($i = 1; $i <= 5; $i++)
                     <span class="star" data-value="{{ $i }}"><iconify-icon icon="solar:star-line-duotone"
@@ -462,25 +467,29 @@
         </div>
       </div>
     @endif
-  @endforeach
+  @endforeach --}}
 
 
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const stars = document.querySelectorAll('.star');
-      const selectedRating = document.getElementById('selectedRating');
+      const modals = document.querySelectorAll('.modal');
 
-      stars.forEach(star => {
-        star.addEventListener('click', function() {
-          const ratingValue = this.getAttribute('data-value');
-          resetStars();
-          highlightStars(ratingValue);
-          selectedRating.value = ratingValue;
+      modals.forEach(modal => {
+        const stars = modal.querySelectorAll('.star');
+        const selectedRating = modal.querySelector('.selected-rating');
+
+        stars.forEach(star => {
+          star.addEventListener('click', function() {
+            const ratingValue = this.getAttribute('data-value');
+            resetStars(stars);
+            highlightStars(stars, ratingValue);
+            selectedRating.value = ratingValue;
+          });
         });
       });
 
-      function resetStars() {
+      function resetStars(stars) {
         stars.forEach(star => {
           // Clear existing content
           while (star.firstChild) {
@@ -496,7 +505,7 @@
         });
       }
 
-      function highlightStars(value) {
+      function highlightStars(stars, value) {
         for (let i = 0; i < value; i++) {
           // Clear existing content
           while (stars[i].firstChild) {
