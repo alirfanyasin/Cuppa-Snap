@@ -6,6 +6,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+
 ![image](https://github.com/alirfanyasin/Cuppa-Snap/assets/77270380/cc69739a-874f-41b1-b889-f26234d231ba)
 
 ![image](https://github.com/alirfanyasin/Cuppa-Snap/assets/77270380/f619ef0c-a600-401e-b51f-11ebb69e8dbd)
